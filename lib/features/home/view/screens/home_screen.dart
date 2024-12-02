@@ -1,11 +1,9 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:movies/features/home/view/widgets/bottom_navigationbar.dart';
-import 'package:movies/taps/browse.dart';
-import 'package:movies/taps/home.dart';
-import 'package:movies/taps/search.dart';
-import 'package:movies/taps/watch_list.dart';
+import 'package:movies/features/browse/view/widgets/browse_tab.dart';
+import 'package:movies/features/home/view/widgets/home_tab.dart';
+import 'package:movies/features/search/view/widgets/search_tab.dart';
+import 'package:movies/features/watch_list/view/widgets/watch_list_tab.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = '/homeScreen';
@@ -17,7 +15,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int selectedindex = 0;
-  List<Widget> taps = [const Home(), const Search(), const Browse(), const WatchList()];
+  List<Widget> taps = [
+    const HomeTab(),
+    const SearchTab(),
+    const BrowseTab(),
+    const WatchListTab()
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(

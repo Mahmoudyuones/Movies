@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Home extends StatelessWidget {
-  const Home({super.key});
+class SearchTab extends StatelessWidget {
+  const SearchTab({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const Center(
       child: Text(
-        'this is home',
+        'this is search',
         style: TextStyle(color: Colors.red),
       ),
     );

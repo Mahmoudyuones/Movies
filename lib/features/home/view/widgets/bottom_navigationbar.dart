@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BottomNavigationbar extends StatelessWidget {
- const BottomNavigationbar(
+  const BottomNavigationbar(
       {super.key, required this.selectedindex, required this.ontapselected});
   final int selectedindex;
   final Function(int) ontapselected;
@@ -18,7 +18,7 @@ class BottomNavigationbar extends StatelessWidget {
         BottomNavigationBarItem(icon: Icon(Icons.movie), label: 'BROWSE'),
         BottomNavigationBarItem(
             icon: Icon(Icons.collections_bookmark_outlined),
-            label: 'WATCHLIST'),
+            label: 'WatchListTab'),
       ],
     );
   }
