@@ -1,7 +1,7 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:movies/home/view/widgets/bottom_navigationbar.dart';
+import 'package:movies/features/home/view/widgets/bottom_navigationbar.dart';
 import 'package:movies/taps/browse.dart';
 import 'package:movies/taps/home.dart';
 import 'package:movies/taps/search.dart';
