@@ -1,0 +1,15 @@
+import 'package:flutter/material.dart';
+
+class Browse extends StatelessWidget {
+  const Browse({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text(
+        'this is browse',
+        style: TextStyle(color: Colors.red),
+      ),
+    );
+  }
+}
