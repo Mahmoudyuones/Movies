@@ -13,12 +13,24 @@ class BottomNavigationbar extends StatelessWidget {
         ontapselected(index);
       },
       items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'HOME'),
-        BottomNavigationBarItem(icon: Icon(Icons.search), label: 'SEARCH'),
-        BottomNavigationBarItem(icon: Icon(Icons.movie), label: 'BROWSE'),
         BottomNavigationBarItem(
-            icon: Icon(Icons.collections_bookmark_outlined),
-            label: 'WatchListTab'),
+          icon: Icon(Icons.home),
+          label: 'HOME',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.search),
+          label: 'SEARCH',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.movie),
+          label: 'BROWSE',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.collections_bookmark_outlined,
+          ),
+          label: 'WatchListTab',
+        ),
       ],
     );
   }
