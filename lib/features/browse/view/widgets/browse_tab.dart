@@ -7,7 +7,7 @@ class BrowseTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+      padding: const EdgeInsets.only(left: 5, right: 5, top: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -25,7 +25,10 @@ class BrowseTab extends StatelessWidget {
             child: GridView.builder(
               padding: const EdgeInsets.all(10),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, crossAxisSpacing: 10, mainAxisSpacing: 10),
+                  childAspectRatio: 150 / 100,
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 30,
+                  mainAxisSpacing: 10),
               itemBuilder: (_, index) => const BorwseCategoryItem(
                   categoryName: 'Action', imageName: 'category_item'),
               itemCount: 20,
