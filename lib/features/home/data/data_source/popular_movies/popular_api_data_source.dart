@@ -9,14 +9,14 @@ import 'package:movies/shared/api_constans/api_constants.dart';
 class PopularApiDataSource extends PopularDataSource {
   @override
   Future<List<Movie>> getMovies() async {
-    final uri = Uri.http(
+    final uri = Uri.https(
       ApiConstans.baseURL,
       ApiConstans.popularEndPoint,
-      {
-        'Authorization': ApiConstans.header,
-      },
     );
-    final response = await http.get(uri);
+    final response = await http.get(uri, headers: {
+      'Authorization': 'Bearer ${ApiConstans.header}',
+      'Accept': 'application/json',
+    });
     final json = jsonDecode(response.body);
     final movieResponse = MoviesResponse.fromJson(json);
 
