@@ -154,12 +154,12 @@ class HomeDetails extends StatelessWidget {
                   ),
                   SizedBox(
                     height: height * 0.4,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 5,
-                      itemBuilder: (context, index) =>
-                          const CategoryItemDetailed(),
-                    ),
+                    // child: ListView.builder(
+                    //   scrollDirection: Axis.horizontal,
+                    //   itemCount: 5,
+                    //   itemBuilder: (context, index) =>
+                    //       const CategoryItemDetailed(),
+                    // ),
                   ),
                 ],
               ),

@@ -1,9 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:movies/features/home/data/models/top_rated_models/top_rated_results.dart';
 import 'package:movies/shared/app_theme/app_colors.dart';
 import 'package:movies/shared/widgets/add.dart';
+import 'package:movies/shared/widgets/loading_indicator.dart';
 
 class CategoryItemDetailed extends StatelessWidget {
-  const CategoryItemDetailed({super.key});
+  final TopRatedResults topRated;
+  const CategoryItemDetailed(this.topRated, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +29,16 @@ class CategoryItemDetailed extends StatelessWidget {
           width: width * 0.3,
           child: Column(
             children: [
-              Image.asset(
-                'assets/images/image_display.png',
+              Flexible(
+                flex: 2,
+                child: CachedNetworkImage(
+                  imageUrl:
+                      'https://image.tmdb.org/t/p/w500/${topRated.posterPath}',
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) => const LoadingIndicator(),
+                  errorWidget: (context, url, error) =>
+                      const Icon(Icons.image_not_supported),
+                ),
               ),
               Container(
                 width: width * 0.3,
@@ -47,7 +60,9 @@ class CategoryItemDetailed extends StatelessWidget {
                             width: 3,
                           ),
                           Text(
-                            '7.7',
+                            topRated.voteAverage != null
+                                ? topRated.voteAverage!.toStringAsFixed(1)
+                                : "N/A",
                             style: titleLarge?.copyWith(
                               fontSize: 10,
                             ),
@@ -57,10 +72,13 @@ class CategoryItemDetailed extends StatelessWidget {
                       const SizedBox(
                         height: 7,
                       ),
-                      Text(
-                        'Deadpool',
-                        style: titleLarge?.copyWith(
-                          fontSize: 10,
+                      Flexible(
+                        flex: 1,
+                        child: Text(
+                          topRated.title ?? "No title",
+                          style: titleLarge?.copyWith(
+                            fontSize: 10,
+                          ),
                         ),
                       ),
                       const SizedBox(
@@ -69,22 +87,21 @@ class CategoryItemDetailed extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            '2018',
+                            topRated.releaseDate != null
+                                ? DateFormat('yyyy').format(
+                                    DateTime.parse(topRated.releaseDate!))
+                                : "No date",
                             style: titleSmall,
                           ),
                           const SizedBox(
                             width: 5,
                           ),
                           Text(
-                            'R',
+                            topRated.adult == true ? 'Pg-13' : 'R',
                             style: titleSmall,
                           ),
                           const SizedBox(
                             width: 5,
-                          ),
-                          Text(
-                            '1h 59m',
-                            style: titleSmall,
                           ),
                         ],
                       )

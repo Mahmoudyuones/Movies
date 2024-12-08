@@ -4,6 +4,7 @@ import 'package:movies/shared/app_theme/app_colors.dart';
 import 'package:movies/shared/widgets/add.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:movies/shared/widgets/loading_indicator.dart';
+import 'package:intl/intl.dart';
 
 class PopularItem extends StatelessWidget {
   final Movie movie;
@@ -44,8 +45,8 @@ class PopularItem extends StatelessWidget {
           top: height * 0.12,
           start: width * 0.02,
           child: SizedBox(
-            height: height *0.3,
-            width: width *0.3,
+            height: height * 0.3,
+            width: width * 0.3,
             child: Stack(
               children: [
                 CachedNetworkImage(
@@ -78,7 +79,11 @@ class PopularItem extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                movie.releaseDate,
+                DateFormat('yyyy').format(
+                  DateTime.parse(
+                    movie.releaseDate,
+                  ),
+                ),
                 style: titleSmall?.copyWith(fontSize: 10),
               ),
               const SizedBox(
