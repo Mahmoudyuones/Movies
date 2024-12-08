@@ -18,7 +18,7 @@ class MoviesApp extends StatelessWidget {
         HomeScreen.routeName: (_) => const HomeScreen(),
         HomeDetails.routeName: (_) => const HomeDetails(),
       },
-      initialRoute: HomeDetails.routeName,
+      initialRoute: HomeScreen.routeName,
       theme: AppTheme.lightPrimary,
       themeMode: ThemeMode.light,
     );

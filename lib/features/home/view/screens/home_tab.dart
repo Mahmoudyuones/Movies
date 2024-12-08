@@ -6,6 +6,8 @@ import 'package:movies/features/home/view/widgets/category_item_detailed.dart';
 import 'package:movies/features/home/view/widgets/popular_item.dart';
 import 'package:movies/features/home/view_model/popular_movies/popular_states.dart';
 import 'package:movies/features/home/view_model/popular_movies/popular_view_model.dart';
+import 'package:movies/features/home/view_model/upcoming_movies/upcoming_states.dart';
+import 'package:movies/features/home/view_model/upcoming_movies/upcoming_view_model.dart';
 import 'package:movies/shared/app_theme/app_colors.dart';
 import 'package:movies/shared/widgets/error_indicator.dart';
 import 'package:movies/shared/widgets/loading_indicator.dart';
@@ -19,6 +21,7 @@ class HomeTab extends StatefulWidget {
 
 class _HomeTabState extends State<HomeTab> {
   final popularViewModel = PopularViewModel();
+  final upcomingViewModel = UpcomingViewModel();
   late Timer _timer;
   int _currentPopularIndex = 0;
 
@@ -26,6 +29,7 @@ class _HomeTabState extends State<HomeTab> {
   void initState() {
     super.initState();
     popularViewModel.getMovies();
+    upcomingViewModel.getMovies();
     _startPopularItemTimer();
   }
 
@@ -94,7 +98,7 @@ class _HomeTabState extends State<HomeTab> {
                           PopularItem(popularList[_currentPopularIndex]),
                           Positioned(
                             right: 10,
-                            top: 82, 
+                            top: 82,
                             child: IconButton(
                               icon: const Icon(
                                 Icons.arrow_forward_rounded,
@@ -133,14 +137,36 @@ class _HomeTabState extends State<HomeTab> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: height * 0.2,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 5,
-                    itemBuilder: (context, index) => const CategoryItem(),
+                BlocProvider(
+                  create: (context) => upcomingViewModel,
+                  child: BlocBuilder<UpcomingViewModel, UpcomingStates>(
+                    builder: (_, state) {
+                      debugPrint('Upcoming state: $state');
+
+                      if (state is UpcomingLoadingState) {
+                        return const LoadingIndicator();
+                      } else if (state is UpcomingErrorState) {
+                        return ErrorIndicator(errMessage: state.errMessage);
+                      } else if (state is UpcomingSuccessState) {
+                        final upcomingList = state.upcomingList;
+
+                        return SizedBox(
+                          height: height * 0.3,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: upcomingList.length,
+                            itemBuilder: (context, index) =>
+                                CategoryItem(upcomingList[index]),
+                          ),
+                        );
+                      } else {
+                        return const SizedBox(
+                          height: 180,
+                        );
+                      }
+                    },
                   ),
-                ),
+                )
               ],
             ),
           ),
