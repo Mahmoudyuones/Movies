@@ -4,7 +4,6 @@ import 'package:movies/shared/app_theme/app_colors.dart';
 import 'package:movies/shared/widgets/add.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:movies/shared/widgets/loading_indicator.dart';
-import 'package:intl/intl.dart';
 
 class PopularItem extends StatelessWidget {
   final Movie movie;
@@ -79,11 +78,7 @@ class PopularItem extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                DateFormat('yyyy').format(
-                  DateTime.parse(
-                    movie.releaseDate,
-                  ),
-                ),
+                movie.releaseDate,
                 style: titleSmall?.copyWith(fontSize: 10),
               ),
               const SizedBox(
