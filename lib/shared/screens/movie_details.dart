@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movies/features/home/view/widgets/category_chips.dart';
-import 'package:movies/features/home/view/widgets/category_item_detailed.dart';
 import 'package:movies/shared/app_theme/app_colors.dart';
 import 'package:movies/shared/widgets/add.dart';
 import 'package:movies/shared/widgets/loading_indicator.dart';
