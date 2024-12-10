@@ -39,6 +39,7 @@ dependencies:
   flutter_bloc: ^8.1.6
   cached_network_image: ^3.4.1
   intl: ^0.18.0
+  easy_debounce: ^2.0.3
 
 
 

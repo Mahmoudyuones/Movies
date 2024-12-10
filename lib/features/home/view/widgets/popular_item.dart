@@ -23,7 +23,7 @@ class PopularItem extends StatelessWidget {
           height: height * 0.25,
           width: double.infinity,
           child: CachedNetworkImage(
-            imageUrl: 'https://image.tmdb.org/t/p/w500/${movie.backdropPath}',
+            imageUrl: movie.backdropPath.isNotEmpty ? 'https://image.tmdb.org/t/p/w500/${movie.backdropPath}' : '' ,
             height: MediaQuery.sizeOf(context).height * 0.25,
             width: double.infinity,
             fit: BoxFit.fill,
