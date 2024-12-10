@@ -37,7 +37,7 @@ class _HomeTabState extends State<HomeTab> {
     _startPopularItemTimer();
   }
 
-  @override
+  @override 
   void dispose() {
     _timer.cancel();
     super.dispose();
