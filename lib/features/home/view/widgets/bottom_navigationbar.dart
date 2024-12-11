@@ -29,7 +29,7 @@ class BottomNavigationbar extends StatelessWidget {
           icon: Icon(
             Icons.collections_bookmark_outlined,
           ),
-          label: 'WatchListTab',
+          label: 'Watchlist',
         ),
       ],
     );
