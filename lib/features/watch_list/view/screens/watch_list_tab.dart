@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movies/features/watch_list/view/widgets/divider.dart';
+import 'package:movies/shared/widgets/divider.dart';
 import 'package:movies/features/watch_list/view/widgets/watch_list_item.dart';
 
 class WatchListTab extends StatelessWidget {
