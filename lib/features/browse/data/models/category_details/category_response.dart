@@ -13,7 +13,7 @@ class CategoryRespnse {
     if (json['results'] != null) {
       movies = <Movie>[];
       json['results'].forEach((v) {
-        movies!.add( Movie.fromJson(v));
+        movies!.add(Movie.fromJson(v));
       });
     }
     totalPages = json['total_pages'];

@@ -27,7 +27,7 @@ class SearchApiDataSource extends SearchDataSource {
       final json = jsonDecode(response.body);
       SearchResponse searchResponse = SearchResponse.fromJson(json);
       List<Results> searchResults = searchResponse.results!;
-      return searchResults ;
+      return searchResults;
     } else {
       throw Exception('Failed to get Movies');
     }

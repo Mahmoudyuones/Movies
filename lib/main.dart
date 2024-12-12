@@ -17,8 +17,8 @@ class MoviesApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         HomeScreen.routeName: (_) => const HomeScreen(),
-        HomeDetails.routeName: (_) => const HomeDetails(),
-        CatedoryDetails.routeName:(_)=>const CatedoryDetails(),
+        MovieDetails.routeName: (_) => const MovieDetails(),
+        CatedoryDetails.routeName: (_) => const CatedoryDetails(),
       },
       initialRoute: HomeScreen.routeName,
       theme: AppTheme.lightPrimary,

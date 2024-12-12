@@ -20,7 +20,6 @@ class TopRatedViewModel extends Cubit<TopRatedStates> {
         ),
       );
     } catch (e) {
-      print(e);
       emit(
         TopRatedErrorState(
           e.toString(),

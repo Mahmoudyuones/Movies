@@ -13,7 +13,8 @@ class UpcomingResponse {
 
   factory UpcomingResponse.fromJson(Map<String, dynamic> json) {
     var resultsList = json['results'] as List;
-    List<Results> resultObjects = resultsList.map((e) => Results.fromJson(e)).toList();
+    List<Results> resultObjects =
+        resultsList.map((e) => Results.fromJson(e)).toList();
 
     return UpcomingResponse(
       dates: Map<String, String>.from(json['dates']),

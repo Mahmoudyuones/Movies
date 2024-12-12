@@ -23,7 +23,9 @@ class _AddState extends State<Add> {
         children: [
           Icon(
             Icons.bookmark,
-            color: isPressed ? const Color.fromARGB(214, 81, 79, 79) : AppColors.yellow,
+            color: isPressed
+                ? const Color.fromARGB(214, 81, 79, 79)
+                : AppColors.yellow,
             size: 50,
           ),
           Icon(

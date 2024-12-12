@@ -9,7 +9,7 @@ class ErrorIndicator extends StatelessWidget {
     return Center(
       child: Text(
         errMessage,
-        style: TextStyle(color: Colors.red),
+        style: const TextStyle(color: Colors.red),
       ),
     );
   }

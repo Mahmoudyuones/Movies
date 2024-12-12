@@ -12,7 +12,7 @@ class SearchViewModel extends Cubit<SearchStates> {
   Future<void> getMovies(String query) async {
     if (query.isEmpty) {
       emit(SearchEmptyState());
-      return ;
+      return;
     }
     emit(SearchLoadingState());
     try {

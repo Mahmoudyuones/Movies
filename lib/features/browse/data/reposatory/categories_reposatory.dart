@@ -7,6 +7,6 @@ class CategoriesReposatory {
   CategoriesReposatory({required this.categoriesDataSource});
 
   Future<List<Categorey>> getCategories() async {
-   return categoriesDataSource.getCategories();
+    return categoriesDataSource.getCategories();
   }
 }

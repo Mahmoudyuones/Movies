@@ -14,21 +14,17 @@ class CategoryDetailsApiDataSource extends CategoryDetailsDataSource {
   Future<List<Movie>> getmovies() async {
     final uri = Uri.https(
       ApiConstans.baseURL,
-     ApiConstans.categoriyDetailsEndPoint, 
-      {'with_genres': categoryId}, 
+      ApiConstans.categoriyDetailsEndPoint,
+      {'with_genres': categoryId},
     );
-    print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-    print(uri);
-    print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+
     final response = await http.get(uri, headers: {
       'Authorization': 'Bearer ${ApiConstans.header}',
       'Accept': 'application/json',
     });
     final json = jsonDecode(response.body);
     final categoreyrsponse = CategoryRespnse.fromJson(json);
-    print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-    print(response.statusCode);
-    print('zzzzzzzzzzzzzzzzzzzzzzzzzzzz');
+
     if (response.statusCode == 200) {
       return categoreyrsponse.movies!;
     } else {

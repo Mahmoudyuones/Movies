@@ -6,8 +6,7 @@ class PopularRepository {
 
   PopularRepository(this.dataSource);
 
-  Future<List<Movie>> getMovies() async{
+  Future<List<Movie>> getMovies() async {
     return dataSource.getMovies();
   }
-  
 }

@@ -21,7 +21,6 @@ class PopularViewModel extends Cubit<PopularStates> {
         ),
       );
     } catch (e) {
-      print(e);
       emit(
         PopularErrorState(
           e.toString(),

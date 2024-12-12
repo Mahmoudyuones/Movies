@@ -37,7 +37,7 @@ class _HomeTabState extends State<HomeTab> {
     _startPopularItemTimer();
   }
 
-  @override 
+  @override
   void dispose() {
     _timer.cancel();
     super.dispose();
@@ -54,15 +54,6 @@ class _HomeTabState extends State<HomeTab> {
     });
   }
 
-  void _goToPreviousItem() {
-    setState(() {
-      if (_currentPopularIndex > 0) {
-        _currentPopularIndex--;
-      } else {
-        _currentPopularIndex = 4;
-      }
-    });
-  }
 
   void _goToNextItem() {
     setState(() {

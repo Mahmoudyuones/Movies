@@ -1,6 +1,7 @@
 import 'package:movies/features/search/data/models/results.dart';
 
 abstract class SearchStates {}
+
 class SearchInitailState extends SearchStates {}
 
 class SearchLoadingState extends SearchStates {}
@@ -16,6 +17,5 @@ class SearchSuccessState extends SearchStates {
 
   SearchSuccessState(this.searchResults);
 }
+
 class SearchEmptyState extends SearchStates {}
-
-

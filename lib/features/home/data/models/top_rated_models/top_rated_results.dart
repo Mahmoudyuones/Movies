@@ -46,6 +46,4 @@ class TopRatedResults {
     voteAverage = json['vote_average'];
     voteCount = json['vote_count'];
   }
-
- 
 }

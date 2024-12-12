@@ -20,7 +20,6 @@ class UpcomingViewModel extends Cubit<UpcomingStates> {
         ),
       );
     } catch (e) {
-      print(e);
       emit(
         UpcomingErrorState(
           e.toString(),

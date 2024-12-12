@@ -5,6 +5,7 @@ import 'package:movies/features/search/data/view_model/search_states.dart';
 import 'package:movies/features/search/data/view_model/search_view_model.dart';
 import 'package:movies/features/search/view/widgets/search_item.dart';
 import 'package:movies/shared/app_theme/app_colors.dart';
+import 'package:movies/shared/screens/movie_details.dart';
 import 'package:movies/shared/widgets/error_indicator.dart';
 import 'package:movies/shared/widgets/loading_indicator.dart';
 import 'package:movies/features/search/view/widgets/no_search_results.dart';
@@ -27,7 +28,6 @@ class _SearchTabState extends State<SearchTab> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -40,9 +40,9 @@ class _SearchTabState extends State<SearchTab> {
               controller: _searchController,
               onChanged: (value) {
                 EasyDebounce.debounce(
-                  'search', 
-                  const Duration(milliseconds: 500), 
-                  () => searchViewModel.getMovies(value), 
+                  'search',
+                  const Duration(milliseconds: 500),
+                  () => searchViewModel.getMovies(value),
                 );
               },
               style: Theme.of(context).textTheme.titleLarge,
@@ -86,8 +86,13 @@ class _SearchTabState extends State<SearchTab> {
                     padding: EdgeInsets.symmetric(
                         horizontal: MediaQuery.sizeOf(context).width * 0.05),
                     child: ListView.separated(
-                      itemBuilder: (context, index) =>
-                          SearchItem(searchMovie: state.searchResults[index]),
+                      itemBuilder: (context, index) => InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, MovieDetails.routeName,
+                                arguments: state.searchResults[index].id);
+                          },
+                          child: SearchItem(
+                              searchMovie: state.searchResults[index])),
                       itemCount: state.searchResults.length,
                       separatorBuilder: (context, index) => const Divider(),
                     ),
