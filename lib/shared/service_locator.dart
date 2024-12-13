@@ -1,3 +1,5 @@
+import 'package:movies/features/browse/data/data_source/Category_details/category_details_api_data_source.dart';
+import 'package:movies/features/browse/data/data_source/Category_details/category_details_data_source.dart';
 import 'package:movies/features/browse/data/data_source/cateogories/categories_api_date_source.dart';
 import 'package:movies/features/browse/data/data_source/cateogories/categories_data_source.dart';
 import 'package:movies/features/home/data/data_source/popular_movies/popular_api_data_source.dart';
@@ -17,6 +19,7 @@ class ServiceLocator {
   static TopRatedDataSource topRatedDataSource = TopRatedApiDataSource();
   static SearchDataSource searchDataSource = SearchApiDataSource();
   static CategoriesDataSource categoriesDataSource = CategoriesApiDateSource();
+  static CategoryDetailsDataSource categoryDetailsDataSource = CategoryDetailsApiDataSource();
   static MovieDetailsDataSource movieDetailsDataSource =
       MovieDetailsAPIDataSource();
 }

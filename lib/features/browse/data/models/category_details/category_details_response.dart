@@ -1,14 +1,15 @@
 import 'package:movies/features/home/data/models/popular_models/movie.dart';
 
-class CategoryRespnse {
+class CategoryDetailsResponse {
   int? page;
   List<Movie>? movies;
   int? totalPages;
   int? totalResults;
 
-  CategoryRespnse({this.page, this.movies, this.totalPages, this.totalResults});
+  CategoryDetailsResponse(
+      {this.page, this.movies, this.totalPages, this.totalResults});
 
-  CategoryRespnse.fromJson(Map<String, dynamic> json) {
+  CategoryDetailsResponse.fromJson(Map<String, dynamic> json) {
     page = json['page'];
     if (json['results'] != null) {
       movies = <Movie>[];

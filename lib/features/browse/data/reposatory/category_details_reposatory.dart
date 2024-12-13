@@ -4,9 +4,9 @@ import 'package:movies/features/home/data/models/popular_models/movie.dart';
 class CategoryDetailsReposatory {
   final CategoryDetailsDataSource categoryDetailsDataSource;
 
-  CategoryDetailsReposatory({required this.categoryDetailsDataSource});
+  CategoryDetailsReposatory(this.categoryDetailsDataSource);
 
-  Future<List<Movie>> getmovies() async {
-    return categoryDetailsDataSource.getmovies();
+  Future<List<Movie>> getmovies(String categoryId) async {
+    return categoryDetailsDataSource.getmovies(categoryId);
   }
 }

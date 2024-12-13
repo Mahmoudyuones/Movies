@@ -1,17 +1,14 @@
 import 'dart:convert';
 
 import 'package:movies/features/browse/data/data_source/Category_details/category_details_data_source.dart';
-import 'package:movies/features/browse/data/models/category_details/category_response.dart';
+import 'package:movies/features/browse/data/models/category_details/category_details_response.dart';
 import 'package:movies/features/home/data/models/popular_models/movie.dart';
 import 'package:movies/shared/api_constans/api_constants.dart';
 import 'package:http/http.dart' as http;
 
 class CategoryDetailsApiDataSource extends CategoryDetailsDataSource {
-  final String categoryId;
-
-  CategoryDetailsApiDataSource({required this.categoryId});
   @override
-  Future<List<Movie>> getmovies() async {
+  Future<List<Movie>> getmovies(String categoryId) async {
     final uri = Uri.https(
       ApiConstans.baseURL,
       ApiConstans.categoriyDetailsEndPoint,
@@ -23,7 +20,7 @@ class CategoryDetailsApiDataSource extends CategoryDetailsDataSource {
       'Accept': 'application/json',
     });
     final json = jsonDecode(response.body);
-    final categoreyrsponse = CategoryRespnse.fromJson(json);
+    final categoreyrsponse = CategoryDetailsResponse.fromJson(json);
 
     if (response.statusCode == 200) {
       return categoreyrsponse.movies!;

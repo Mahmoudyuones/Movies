@@ -20,9 +20,8 @@ class _CatedoryDetailsState extends State<CatedoryDetails> {
   @override
   Widget build(BuildContext context) {
     final categorey = ModalRoute.of(context)!.settings.arguments as Categorey;
-    final categoryDetailsViewModel =
-        CategoryDetailsViewModel(categoryId: categorey.id.toString());
-    categoryDetailsViewModel.getmovies();
+    final categoryDetailsViewModel = CategoryDetailsViewModel();
+    categoryDetailsViewModel.getmovies(categorey.id.toString());
     return Scaffold(
       appBar: AppBar(
         title: Text(categorey.name ?? ""),
