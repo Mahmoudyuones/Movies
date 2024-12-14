@@ -1,8 +1,8 @@
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies/features/search/data/view_model/search_states.dart';
-import 'package:movies/features/search/data/view_model/search_view_model.dart';
+import 'package:movies/features/search/view_model/search_states.dart';
+import 'package:movies/features/search/view_model/search_view_model.dart';
 import 'package:movies/features/search/view/widgets/search_item.dart';
 import 'package:movies/shared/app_theme/app_colors.dart';
 import 'package:movies/shared/screens/movie_details.dart';

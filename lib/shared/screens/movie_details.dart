@@ -6,6 +6,9 @@ import 'package:movies/features/home/view/widgets/category_chips.dart';
 import 'package:movies/features/movie_details/data/models/movie_details_response.dart';
 import 'package:movies/features/movie_details/view_model/movie_details_state.dart';
 import 'package:movies/features/movie_details/view_model/movie_details_view_model.dart';
+import 'package:movies/features/similar/view/widgets/movie_tab.dart';
+import 'package:movies/features/similar/view_model/similar_states.dart';
+import 'package:movies/features/similar/view_model/similar_view_model.dart';
 import 'package:movies/shared/app_theme/app_colors.dart';
 import 'package:movies/shared/widgets/add.dart';
 import 'package:movies/shared/widgets/error_indicator.dart';
@@ -52,6 +55,8 @@ class _MovieDetailsState extends State<MovieDetails> {
   }
 
   Widget _buildDetailsScreen(BuildContext context, MovieDetailsResponse movie) {
+    final int movieId = ModalRoute.of(context)!.settings.arguments as int;
+
     double height = MediaQuery.sizeOf(context).height;
     double width = MediaQuery.sizeOf(context).width;
     TextStyle? titleLarge = Theme.of(context).textTheme.titleLarge;
@@ -155,12 +160,14 @@ class _MovieDetailsState extends State<MovieDetails> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CategoryChips(
-                        categories: movie.genres!.map((geners) => geners.name ?? '').toList()  ,
+                        categories: movie.genres!
+                            .map((geners) => geners.name ?? '')
+                            .toList(),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                         movie.overview ?? '',
+                          movie.overview ?? '',
                           style: titleSmall?.copyWith(
                             fontSize: 13,
                           ),
@@ -175,9 +182,9 @@ class _MovieDetailsState extends State<MovieDetails> {
                             color: AppColors.yellow,
                           ),
                           Text(
-                              movie.voteAverage != null
+                            movie.voteAverage != null
                                 ? movie.voteAverage!.toStringAsFixed(1)
-                                : "N/A", 
+                                : "N/A",
                             style: titleLarge?.copyWith(fontSize: 18),
                           ),
                         ],
@@ -203,15 +210,36 @@ class _MovieDetailsState extends State<MovieDetails> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: height * 0.4,
-                    // child: ListView.builder(
-                    //   scrollDirection: Axis.horizontal,
-                    //   itemCount: 5,
-                    //   itemBuilder: (context, index) =>
-                    //       const CategoryItemDetailed(),
-                    // ),
-                  ),
+                  BlocProvider(
+                    create: (context) {
+                      final similarViewModel = SimilarViewModel();
+                      similarViewModel.getMovies(
+                          movieId); 
+                      return similarViewModel; 
+                    },
+                    child: BlocBuilder<SimilarViewModel, SimilarStates>(
+                      builder: (context, state) {
+                        if (state is SimilarLoadingState) {
+                          return const LoadingIndicator();
+                        } else if (state is SimilarErrorState) {
+                          return ErrorIndicator(errMessage: state.errMessage);
+                        } else if (state is SimilarSuccessState) {
+                          final similarList = state.similarResults;
+                          return SizedBox(
+                            height: height * 0.4,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: similarList.length,
+                              itemBuilder: (context, index) =>
+                                  MovieTab(similarList[index]),
+                            ),
+                          );
+                        } else {
+                          return const SizedBox();
+                        }
+                      },
+                    ),
+                  )
                 ],
               ),
             ),
