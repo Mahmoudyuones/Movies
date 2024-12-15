@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:movies/features/home/data/models/top_rated_models/top_rated_results.dart';
 import 'package:movies/shared/app_theme/app_colors.dart';
@@ -13,30 +14,32 @@ class CategoryItemDetailed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.sizeOf(context).height;
-
-    double width = MediaQuery.sizeOf(context).width;
     TextStyle? titleLarge = Theme.of(context).textTheme.titleLarge;
     TextStyle? titleSmall = Theme.of(context).textTheme.titleSmall;
 
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, MovieDetails.routeName,
-            arguments: topRated.id);
+        Navigator.pushNamed(
+          context,
+          MovieDetails.routeName,
+          arguments: topRated.id,
+        );
       },
       child: Stack(
         clipBehavior: Clip.none,
         children: [
           Container(
-            margin: const EdgeInsets.symmetric(
-              horizontal: 10,
-              vertical: 8,
+            margin: EdgeInsets.symmetric(
+              horizontal: 14.w,
+              vertical: 15.h,
             ),
-            width: width * 0.3,
+            width: 97.w,
+            height: 184.h,
             child: Column(
               children: [
-                Flexible(
-                  flex: 2,
+                SizedBox(
+                  height: 128.h,
+                  width: 97.w,
                   child: CachedNetworkImage(
                     imageUrl:
                         'https://image.tmdb.org/t/p/w500/${topRated.posterPath}',
@@ -47,11 +50,12 @@ class CategoryItemDetailed extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  width: width * 0.3,
-                  height: height * 0.1,
+                  width: 97.w,
+                  height: 57.h,
                   color: AppColors.grey,
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 6.w, vertical: 10.h),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -62,29 +66,26 @@ class CategoryItemDetailed extends StatelessWidget {
                               Icons.star,
                               color: AppColors.yellow,
                             ),
-                            const SizedBox(
-                              width: 3,
+                            SizedBox(
+                              width: 3.7.w,
                             ),
                             Text(
                               topRated.voteAverage != null
                                   ? topRated.voteAverage!.toStringAsFixed(1)
                                   : "N/A",
                               style: titleLarge?.copyWith(
-                                fontSize: 10,
+                                fontSize: 10.sp,
                               ),
                             ),
                           ],
                         ),
                         const SizedBox(
-                          height: 7,
+                          height: 0,
                         ),
-                        Flexible(
-                          flex: 1,
-                          child: Text(
-                            topRated.title ?? "No title",
-                            style: titleLarge?.copyWith(
-                              fontSize: 10,
-                            ),
+                        Text(
+                          topRated.title ?? "No title",
+                          style: titleLarge?.copyWith(
+                            fontSize: 10.sp,
                           ),
                         ),
                         const SizedBox(

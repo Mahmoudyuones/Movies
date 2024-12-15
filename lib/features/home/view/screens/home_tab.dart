@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies/features/home/view/widgets/category_item.dart';
 import 'package:movies/features/home/view/widgets/category_item_detailed.dart';
 import 'package:movies/features/home/view/widgets/popular_item.dart';
@@ -67,167 +68,156 @@ class _HomeTabState extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.sizeOf(context).height;
     TextStyle? titleLarge = Theme.of(context).textTheme.titleLarge;
 
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Column(
-        children: [
-          BlocProvider(
-            create: (context) => popularViewModel,
-            child: BlocBuilder<PopularViewModel, PopularStates>(
-              builder: (_, state) {
-                if (state is PopularLoadingState) {
-                  return const LoadingIndicator();
-                } else if (state is PopularErrorState) {
-                  return ErrorIndicator(errMessage: state.errMessage);
-                } else if (state is PopularSuccessState) {
-                  final popularList = state.popularList;
-                  _currentPopularIndex %= popularList.length;
-
-                  return Column(
-                    children: [
-                      Stack(
-                        children: [
-                          PopularItem(popularList[_currentPopularIndex]),
-                          Positioned(
-                            right: 10,
-                            top: 82,
-                            child: IconButton(
-                              icon: const Icon(
-                                Icons.arrow_forward_rounded,
-                                size: 50,
-                                color: AppColors.white,
-                              ),
-                              onPressed: _goToNextItem,
+    return Column(
+      children: [
+        BlocProvider(
+          create: (context) => popularViewModel,
+          child: BlocBuilder<PopularViewModel, PopularStates>(
+            builder: (_, state) {
+              if (state is PopularLoadingState) {
+                return const LoadingIndicator();
+              } else if (state is PopularErrorState) {
+                return ErrorIndicator(errMessage: state.errMessage);
+              } else if (state is PopularSuccessState) {
+                final popularList = state.popularList;
+                _currentPopularIndex %= popularList.length;
+    
+                return Column(
+                  children: [
+                    Stack(
+                      children: [
+                        PopularItem(popularList[_currentPopularIndex]),
+                        Positioned(
+                          right: 10,
+                          top: 82,
+                          child: IconButton(
+                            icon: const Icon(
+                              Icons.arrow_forward_rounded,
+                              size: 50,
+                              color: AppColors.white,
                             ),
+                            onPressed: _goToNextItem,
                           ),
-                        ],
-                      ),
-                    ],
-                  );
-                } else {
-                  return const SizedBox();
-                }
-              },
-            ),
-          ),
-          SizedBox(height: height * 0.1),
-          Container(
-            width: double.infinity,
-            decoration: const BoxDecoration(
-              color: AppColors.darkGrey,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
-                  child: Text(
-                    "New Releases",
-                    style: titleLarge?.copyWith(
-                      fontSize: 15,
+                        ),
+                      ],
                     ),
-                  ),
-                ),
-                BlocProvider(
-                  create: (context) => upcomingViewModel,
-                  child: BlocBuilder<UpcomingViewModel, UpcomingStates>(
-                    builder: (_, state) {
-                      debugPrint('Upcoming state: $state');
-
-                      if (state is UpcomingLoadingState) {
-                        return const LoadingIndicator();
-                      } else if (state is UpcomingErrorState) {
-                        return ErrorIndicator(errMessage: state.errMessage);
-                      } else if (state is UpcomingSuccessState) {
-                        final upcomingList = state.upcomingList;
-
-                        return SizedBox(
-                          height: height * 0.3,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: upcomingList.length,
-                            itemBuilder: (context, index) =>
-                                CategoryItem(upcomingList[index]),
-                          ),
-                        );
-                      } else {
-                        return const SizedBox(
-                          height: 180,
-                        );
-                      }
-                    },
-                  ),
-                ),
-              ],
-            ),
+                  ],
+                );
+              } else {
+                return const SizedBox();
+              }
+            },
           ),
-          SizedBox(height: height * 0.05),
-          Container(
-            width: double.infinity,
-            decoration: const BoxDecoration(
-              color: AppColors.darkGrey,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
-                  child: Text(
-                    "Recommended",
-                    style: titleLarge?.copyWith(
-                      fontSize: 15,
-                    ),
-                  ),
-                ),
-                BlocProvider(
-                  create: (context) => topRatedViewModel,
-                  child: BlocBuilder<TopRatedViewModel, TopRatedStates>(
-                    builder: (_, state) {
-                      debugPrint('Upcoming state: $state');
-
-                      if (state is TopRatedLoadingState) {
-                        return const LoadingIndicator();
-                      } else if (state is TopRatedErrorState) {
-                        return ErrorIndicator(errMessage: state.errMessage);
-                      } else if (state is TopRatedSuccessState) {
-                        final topRatedList = state.topRatedList;
-
-                        return SizedBox(
-                          height: height * 0.3,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: topRatedList.length,
-                            itemBuilder: (context, index) =>
-                                CategoryItemDetailed(topRatedList[index]),
-                          ),
-                        );
-                      } else {
-                        return const SizedBox(
-                          height: 180,
-                        );
-                      }
-                    },
-                  ),
-                ),
-                // SizedBox(
-                //   height: height * 0.4,
-                //   child: ListView.builder(
-                //     scrollDirection: Axis.horizontal,
-                //     itemCount: 5,
-                //     itemBuilder: (context, index) =>
-                //         const CategoryItemDetailed(),
-                //   ),
-                // ),
-              ],
-            ),
+        ),
+        SizedBox(height: 96.h),
+        Container(
+          height: 187.h,
+          width: 420.w,
+          decoration: const BoxDecoration(
+            color: AppColors.darkGrey,
           ),
-        ],
-      ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 8),
+                child: Text(
+                  "New Releases",
+                  style: titleLarge?.copyWith(
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              BlocProvider(
+                create: (context) => upcomingViewModel,
+                child: BlocBuilder<UpcomingViewModel, UpcomingStates>(
+                  builder: (_, state) {
+                    debugPrint('Upcoming state: $state');
+    
+                    if (state is UpcomingLoadingState) {
+                      return const LoadingIndicator();
+                    } else if (state is UpcomingErrorState) {
+                      return ErrorIndicator(errMessage: state.errMessage);
+                    } else if (state is UpcomingSuccessState) {
+                      final upcomingList = state.upcomingList;
+    
+                      return SizedBox(
+                        height: 127.h,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: upcomingList.length,
+                          itemBuilder: (context, index) =>
+                              CategoryItem(upcomingList[index]),
+                        ),
+                      );
+                    } else {
+                      return const SizedBox(
+                        height: 180,
+                      );
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height:30.h),
+        Container(
+          height: 264.h,
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            color: AppColors.darkGrey,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding:
+                     EdgeInsets.symmetric(vertical: 10.w, horizontal: 24.h),
+                child: Text(
+                  "Recommended",
+                  style: titleLarge?.copyWith(
+                    fontSize: 15.sp,
+                  ),
+                ),
+              ),
+              BlocProvider(
+                create: (context) => topRatedViewModel,
+                child: BlocBuilder<TopRatedViewModel, TopRatedStates>(
+                  builder: (_, state) {
+                    debugPrint('Upcoming state: $state');
+    
+                    if (state is TopRatedLoadingState) {
+                      return const LoadingIndicator();
+                    } else if (state is TopRatedErrorState) {
+                      return ErrorIndicator(errMessage: state.errMessage);
+                    } else if (state is TopRatedSuccessState) {
+                      final topRatedList = state.topRatedList;
+    
+                      return SizedBox(
+                        height: 260.h,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: topRatedList.length,
+                          itemBuilder: (context, index) =>
+                              CategoryItemDetailed(topRatedList[index]),
+                        ),
+                      );
+                    } else {
+                      return const SizedBox(
+                        height: 180,
+                      );
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies/features/home/data/models/popular_models/movie.dart';
 import 'package:movies/shared/app_theme/app_colors.dart';
 import 'package:movies/shared/screens/movie_details.dart';
@@ -26,13 +27,13 @@ class PopularItem extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           SizedBox(
-            height: height * 0.25,
+            height: 217.h,
             width: double.infinity,
             child: CachedNetworkImage(
               imageUrl: movie.backdropPath.isNotEmpty
                   ? 'https://image.tmdb.org/t/p/w500/${movie.backdropPath}'
                   : '',
-              height: MediaQuery.sizeOf(context).height * 0.25,
+              height: 217.h,
               width: double.infinity,
               fit: BoxFit.fill,
               placeholder: (context, url) => const LoadingIndicator(),
@@ -46,11 +47,11 @@ class PopularItem extends StatelessWidget {
             size: 80,
           ),
           PositionedDirectional(
-            top: height * 0.12,
-            start: width * 0.02,
+            top: 90.h,
+            start: 10.w,
             child: SizedBox(
-              height: height * 0.3,
-              width: width * 0.3,
+              height: 199.h,
+              width: 129.w,
               child: Stack(
                 children: [
                   CachedNetworkImage(
@@ -61,8 +62,8 @@ class PopularItem extends StatelessWidget {
                         const Icon(Icons.image_not_supported),
                   ),
                   PositionedDirectional(
-                    end: width * 0.18,
-                    bottom: height * 0.24,
+                    end:81.w,
+                    bottom: 148.h,
                     child: const Add(),
                   ),
                 ],
@@ -70,8 +71,8 @@ class PopularItem extends StatelessWidget {
             ),
           ),
           PositionedDirectional(
-            top: height * 0.255,
-            start: width * 0.4,
+            top: 230.h,
+            start: 164.w,
             child: Text(
               movie.title,
               style: titleLarge,
