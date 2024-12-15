@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:movies/features/home/data/models/popular_models/movie.dart';
 import 'package:movies/shared/app_theme/app_colors.dart';
 import 'package:movies/shared/widgets/add.dart';
@@ -23,7 +24,9 @@ class PopularItem extends StatelessWidget {
           height: height * 0.25,
           width: double.infinity,
           child: CachedNetworkImage(
-            imageUrl: movie.backdropPath.isNotEmpty ? 'https://image.tmdb.org/t/p/w500/${movie.backdropPath}' : '' ,
+            imageUrl: movie.backdropPath.isNotEmpty
+                ? 'https://image.tmdb.org/t/p/w500/${movie.backdropPath}'
+                : '',
             height: MediaQuery.sizeOf(context).height * 0.25,
             width: double.infinity,
             fit: BoxFit.fill,
@@ -58,7 +61,12 @@ class PopularItem extends StatelessWidget {
                 PositionedDirectional(
                   end: width * 0.18,
                   bottom: height * 0.24,
-                  child: const Add(),
+                  child: Add(
+                    movieId: movie.id.toString(),
+                    imageUrl: movie.backdropPath,
+                    releaseDate: movie.releaseDate,
+                    title: movie.title,
+                  ),
                 ),
               ],
             ),
@@ -78,7 +86,7 @@ class PopularItem extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                movie.releaseDate,
+                DateFormat('yyyy').format(DateTime.parse(movie.releaseDate)),
                 style: titleSmall?.copyWith(fontSize: 10),
               ),
               const SizedBox(

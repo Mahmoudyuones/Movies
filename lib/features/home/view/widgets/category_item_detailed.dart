@@ -112,10 +112,10 @@ class CategoryItemDetailed extends StatelessWidget {
             ],
           ),
         ),
-        const Positioned(
+         Positioned(
           top: 5,
           left: 1,
-          child: Add(),
+          child: Add(movieId: topRated.id.toString(),imageUrl: topRated.backdropPath!,releaseDate:topRated.releaseDate!,title: topRated.title! ,),
         ),
       ],
     );
