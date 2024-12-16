@@ -32,7 +32,7 @@ class _AddState extends State<Add> {
 
   Future<void> openBox() async {
     favoritesBox = await Hive.openBox('favorites');
-    
+
     setState(() {
       isPressed = favoritesBox.containsKey(widget.movieId);
     });

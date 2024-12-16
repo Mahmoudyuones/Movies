@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:movies/features/browse/view/screens/catedory_details.dart';
-import 'package:movies/shared/screens/movie_details.dart';
 import 'package:movies/features/home/view/screens/home_screen.dart';
 import 'package:movies/shared/app_theme/app_theme.dart';
 
