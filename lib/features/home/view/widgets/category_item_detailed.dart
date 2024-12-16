@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:movies/features/home/data/models/top_rated_models/top_rated_results.dart';
 import 'package:movies/shared/app_theme/app_colors.dart';
+import 'package:movies/shared/box_details_wanted.dart';
 import 'package:movies/shared/screens/movie_details.dart';
 import 'package:movies/shared/widgets/add.dart';
 import 'package:movies/shared/widgets/loading_indicator.dart';
@@ -22,7 +23,7 @@ class CategoryItemDetailed extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.pushNamed(context, MovieDetails.routeName,
-            arguments: topRated.id);
+            arguments: BoxDetailsWanted(movieId: topRated.id!, titel: topRated.title!, imageURL: topRated.backdropPath!, releasDate: topRated.releaseDate!));
       },
       child: Stack(
         clipBehavior: Clip.none,
@@ -118,10 +119,15 @@ class CategoryItemDetailed extends StatelessWidget {
               ],
             ),
           ),
-          const Positioned(
+          Positioned(
             top: 5,
             left: 1,
-            child: Add(),
+            child: Add(
+              imageUrl: topRated.backdropPath!,
+              movieId: topRated.id!,
+              title: topRated.title!,
+              releaseDate: topRated.releaseDate!,
+            ),
           ),
         ],
       ),

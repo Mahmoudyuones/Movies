@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies/features/home/data/models/popular_models/movie.dart';
 import 'package:movies/shared/app_theme/app_colors.dart';
+import 'package:movies/shared/box_details_wanted.dart';
 import 'package:movies/shared/screens/movie_details.dart';
 import 'package:movies/shared/widgets/add.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -19,7 +20,11 @@ class PopularItem extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.pushNamed(context, MovieDetails.routeName,
-            arguments: movie.id);
+            arguments: BoxDetailsWanted(
+                movieId: movie.id,
+                titel: movie.title,
+                imageURL: movie.backdropPath,
+                releasDate: movie.releaseDate));
       },
       child: Stack(
         clipBehavior: Clip.none,
@@ -63,7 +68,12 @@ class PopularItem extends StatelessWidget {
                   PositionedDirectional(
                     end: width * 0.18,
                     bottom: height * 0.24,
-                    child: const Add(),
+                    child: Add(
+                      imageUrl: movie.backdropPath,
+                      movieId: movie.id,
+                      title: movie.title,
+                      releaseDate: movie.releaseDate,
+                    ),
                   ),
                 ],
               ),

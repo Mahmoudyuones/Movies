@@ -5,6 +5,7 @@ import 'package:movies/features/search/view_model/search_states.dart';
 import 'package:movies/features/search/view_model/search_view_model.dart';
 import 'package:movies/features/search/view/widgets/search_item.dart';
 import 'package:movies/shared/app_theme/app_colors.dart';
+import 'package:movies/shared/box_details_wanted.dart';
 import 'package:movies/shared/screens/movie_details.dart';
 import 'package:movies/shared/widgets/error_indicator.dart';
 import 'package:movies/shared/widgets/loading_indicator.dart';
@@ -89,7 +90,12 @@ class _SearchTabState extends State<SearchTab> {
                       itemBuilder: (context, index) => InkWell(
                           onTap: () {
                             Navigator.pushNamed(context, MovieDetails.routeName,
-                                arguments: state.searchResults[index].id);
+                                arguments: BoxDetailsWanted(
+                                  movieId: state.searchResults[index].id!,
+                                  titel: state.searchResults[index].title!,
+                                  imageURL: state.searchResults[index].backdropPath!,
+                                  releasDate: state.searchResults[index].releaseDate!),
+                            );
                           },
                           child: SearchItem(
                               searchMovie: state.searchResults[index])),

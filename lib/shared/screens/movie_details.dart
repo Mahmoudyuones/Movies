@@ -10,6 +10,7 @@ import 'package:movies/features/similar/view/widgets/movie_tab.dart';
 import 'package:movies/features/similar/view_model/similar_states.dart';
 import 'package:movies/features/similar/view_model/similar_view_model.dart';
 import 'package:movies/shared/app_theme/app_colors.dart';
+import 'package:movies/shared/box_details_wanted.dart';
 import 'package:movies/shared/widgets/add.dart';
 import 'package:movies/shared/widgets/error_indicator.dart';
 import 'package:movies/shared/widgets/loading_indicator.dart';
@@ -27,10 +28,10 @@ class _MovieDetailsState extends State<MovieDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final int movieId = ModalRoute.of(context)!.settings.arguments as int;
+    final BoxDetailsWanted movie = ModalRoute.of(context)!.settings.arguments as BoxDetailsWanted;
 
     return BlocProvider(
-      create: (_) => MovieDetailsViewModel()..getMovies(movieId),
+      create: (_) => MovieDetailsViewModel()..getMovies(movie.movieId as int),
       child: BlocBuilder<MovieDetailsViewModel, MovieDetailsStates>(
         builder: (context, state) {
           if (state is MovieDetailsLoadingState) {
@@ -43,7 +44,7 @@ class _MovieDetailsState extends State<MovieDetails> {
               body: Center(child: ErrorIndicator(errMessage: state.errMessage)),
             );
           } else if (state is MovieDetailsSuccessState) {
-            return _buildDetailsScreen(context, state.movieDetailsResults);
+            return _buildDetailsScreen(context, state.movieDetailsResults,movie);
           }
 
           return const Scaffold(
@@ -54,7 +55,7 @@ class _MovieDetailsState extends State<MovieDetails> {
     );
   }
 
-  Widget _buildDetailsScreen(BuildContext context, MovieDetailsResponse movie) {
+  Widget _buildDetailsScreen(BuildContext context, MovieDetailsResponse movie,BoxDetailsWanted boxDetailsWanted) {
     final int movieId = ModalRoute.of(context)!.settings.arguments as int;
 
     double height = MediaQuery.sizeOf(context).height;
@@ -152,7 +153,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                         ),
                       ),
                     ),
-                    const Add(),
+                     Add(imageUrl:boxDetailsWanted.imageURL,movieId:boxDetailsWanted.movieId ,releaseDate:boxDetailsWanted.releasDate ,title: boxDetailsWanted.titel,),
                   ],
                 ),
                 Expanded(

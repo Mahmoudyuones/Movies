@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:movies/features/similar/data/models/results.dart';
 import 'package:movies/shared/app_theme/app_colors.dart';
+import 'package:movies/shared/box_details_wanted.dart';
 import 'package:movies/shared/screens/movie_details.dart';
 import 'package:movies/shared/widgets/add.dart';
 import 'package:movies/shared/widgets/loading_indicator.dart';
@@ -21,8 +22,15 @@ class MovieTab extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, MovieDetails.routeName,
-            arguments: similarResults.id);
+        Navigator.pushNamed(
+          context,
+          MovieDetails.routeName,
+          arguments: BoxDetailsWanted(
+              movieId: similarResults.id!,
+              titel: similarResults.title!,
+              imageURL: similarResults.backdropPath!,
+              releasDate: similarResults.releaseDate!),
+        );
       },
       child: Stack(
         clipBehavior: Clip.none,
@@ -120,10 +128,15 @@ class MovieTab extends StatelessWidget {
               ],
             ),
           ),
-          const Positioned(
+          Positioned(
             top: 5,
             left: 1,
-            child: Add(),
+            child: Add(
+              imageUrl: similarResults.backdropPath!,
+              movieId: similarResults.id!,
+              title: similarResults.title!,
+              releaseDate: similarResults.releaseDate!,
+            ),
           ),
         ],
       ),

@@ -3,7 +3,7 @@ import 'package:movies/features/home/view/widgets/bottom_navigationbar.dart';
 import 'package:movies/features/browse/view/widgets/browse_tab.dart';
 import 'package:movies/features/home/view/screens/home_tab.dart';
 import 'package:movies/features/search/view/widgets/search_tab.dart';
-import 'package:movies/features/watch_list/view/widgets/watch_list_tab.dart';
+import 'package:movies/features/watch_list/view/screens/watch_list_tap.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = '/homeScreen';

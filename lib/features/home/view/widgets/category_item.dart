@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movies/features/home/data/models/upcoming_models/results.dart';
+import 'package:movies/shared/box_details_wanted.dart';
 import 'package:movies/shared/screens/movie_details.dart';
 import 'package:movies/shared/widgets/add.dart';
 import 'package:movies/shared/widgets/loading_indicator.dart';
@@ -18,8 +19,15 @@ class CategoryItem extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, MovieDetails.routeName,
-                arguments: results.id);
+            Navigator.pushNamed(
+              context,
+              MovieDetails.routeName,
+              arguments: BoxDetailsWanted(
+                  movieId: results.id,
+                  titel: results.title,
+                  imageURL: results.backdropPath,
+                  releasDate: results.releaseDate),
+            );
           },
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
@@ -37,7 +45,12 @@ class CategoryItem extends StatelessWidget {
         PositionedDirectional(
           top: height * 0.001,
           end: width * 0.2,
-          child: const Add(),
+          child: Add(
+            imageUrl: results.backdropPath,
+            movieId: results.id,
+            title: results.title,
+            releaseDate: results.releaseDate,
+          ),
         ),
       ],
     );

@@ -6,6 +6,7 @@ class ApiConstans {
   static const String searchEndPoint = '/3/search/movie';
   static const String categoriesEndPoint = '/3/genre/movie/list';
   static const String categoriyDetailsEndPoint = '/3/discover/movie';
+   static const String baseImageURl = 'https://image.tmdb.org/t/p/w500/';
   static String movieDetailsEndPoint(int movieId) {
     return '/3/movie/$movieId';
   }
