@@ -28,10 +28,11 @@ class _MovieDetailsState extends State<MovieDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final BoxDetailsWanted movie = ModalRoute.of(context)!.settings.arguments as BoxDetailsWanted;
+    final BoxDetailsWanted movie =
+        ModalRoute.of(context)!.settings.arguments as BoxDetailsWanted;
 
     return BlocProvider(
-      create: (_) => MovieDetailsViewModel()..getMovies(movie.movieId as int),
+      create: (_) => MovieDetailsViewModel()..getMovies(movie.movieId),
       child: BlocBuilder<MovieDetailsViewModel, MovieDetailsStates>(
         builder: (context, state) {
           if (state is MovieDetailsLoadingState) {
@@ -44,7 +45,8 @@ class _MovieDetailsState extends State<MovieDetails> {
               body: Center(child: ErrorIndicator(errMessage: state.errMessage)),
             );
           } else if (state is MovieDetailsSuccessState) {
-            return _buildDetailsScreen(context, state.movieDetailsResults,movie);
+            return _buildDetailsScreen(
+                context, state.movieDetailsResults, movie);
           }
 
           return const Scaffold(
@@ -55,9 +57,8 @@ class _MovieDetailsState extends State<MovieDetails> {
     );
   }
 
-  Widget _buildDetailsScreen(BuildContext context, MovieDetailsResponse movie,BoxDetailsWanted boxDetailsWanted) {
-    final int movieId = ModalRoute.of(context)!.settings.arguments as int;
-
+  Widget _buildDetailsScreen(BuildContext context, MovieDetailsResponse movie,
+      BoxDetailsWanted boxDetailsWanted) {
     double height = MediaQuery.sizeOf(context).height;
     double width = MediaQuery.sizeOf(context).width;
     TextStyle? titleLarge = Theme.of(context).textTheme.titleLarge;
@@ -153,7 +154,12 @@ class _MovieDetailsState extends State<MovieDetails> {
                         ),
                       ),
                     ),
-                     Add(imageUrl:boxDetailsWanted.imageURL,movieId:boxDetailsWanted.movieId ,releaseDate:boxDetailsWanted.releasDate ,title: boxDetailsWanted.titel,),
+                    Add(
+                      imageUrl: boxDetailsWanted.imageURL,
+                      movieId: boxDetailsWanted.movieId,
+                      releaseDate: boxDetailsWanted.releasDate,
+                      title: boxDetailsWanted.titel,
+                    ),
                   ],
                 ),
                 Expanded(
@@ -215,8 +221,9 @@ class _MovieDetailsState extends State<MovieDetails> {
                     create: (context) {
                       final similarViewModel = SimilarViewModel();
                       similarViewModel.getMovies(
-                          movieId); 
-                      return similarViewModel; 
+                        boxDetailsWanted.movieId,
+                      );
+                      return similarViewModel;
                     },
                     child: BlocBuilder<SimilarViewModel, SimilarStates>(
                       builder: (context, state) {
