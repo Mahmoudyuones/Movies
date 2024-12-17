@@ -14,7 +14,7 @@ class BorwseCategoryItem extends StatelessWidget {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              'assets/images/$imageName.png',
+              'assets/images/$imageName.webp',
             ),
             fit: BoxFit.fill,
             colorFilter: ColorFilter.mode(
