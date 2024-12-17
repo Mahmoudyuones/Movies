@@ -27,6 +27,8 @@ class _HomeTabState extends State<HomeTab> {
   final topRatedViewModel = TopRatedViewModel();
   late Timer _timer;
   int _currentPopularIndex = 0;
+  Map<int, bool> favoriteStates = {};
+
 
   @override
   void initState() {
@@ -55,15 +57,6 @@ class _HomeTabState extends State<HomeTab> {
   }
 
 
-  void _goToNextItem() {
-    setState(() {
-      if (_currentPopularIndex < 4) {
-        _currentPopularIndex++;
-      } else {
-        _currentPopularIndex = 0;
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,18 +83,8 @@ class _HomeTabState extends State<HomeTab> {
                     children: [
                       Stack(
                         children: [
-                          PopularItem(popularList[_currentPopularIndex]),
-                          Positioned(
-                            right: 10,
-                            top: 82,
-                            child: IconButton(
-                              icon: const Icon(
-                                Icons.arrow_forward_rounded,
-                                size: 50,
-                                color: AppColors.white,
-                              ),
-                              onPressed: _goToNextItem,
-                            ),
+                          PopularItem(
+                            popularList[_currentPopularIndex],
                           ),
                         ],
                       ),
@@ -214,7 +197,6 @@ class _HomeTabState extends State<HomeTab> {
                     },
                   ),
                 ),
-
               ],
             ),
           ),

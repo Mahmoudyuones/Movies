@@ -43,17 +43,19 @@ class MovieTab extends StatelessWidget {
             width: width * 0.3,
             child: Column(
               children: [
-                Flexible(
-                  flex: 2,
-                  child: CachedNetworkImage(
+                CachedNetworkImage(
                     imageUrl:
                         'https://image.tmdb.org/t/p/w500/${similarResults.posterPath}',
                     fit: BoxFit.cover,
                     placeholder: (context, url) => const LoadingIndicator(),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.image_not_supported),
-                  ),
-                ),
+                    errorWidget: (context, url, error) => SizedBox(
+                      height: height * 0.21,
+                      width: width * 0.3,
+                          child: Image.network(
+                            'https://th.bing.com/th/id/OIP.nKHjaZVhPgLKjjntUMpmXwHaHa?rs=1&pid=ImgDetMain',
+                            fit: BoxFit.fill,
+                          ),
+                        )),
                 Container(
                   width: width * 0.3,
                   height: height * 0.1,
@@ -132,7 +134,8 @@ class MovieTab extends StatelessWidget {
             top: 5,
             left: 1,
             child: Add(
-              imageUrl: similarResults.backdropPath!,
+              imageUrl: similarResults.backdropPath ??
+                  "https://t3.ftcdn.net/jpg/07/56/55/36/360_F_756553632_OVMiiEomgzVZCumVMC7Mwt5X3Btipa4X.jpg",
               movieId: similarResults.id!,
               title: similarResults.title!,
               releaseDate: similarResults.releaseDate!,

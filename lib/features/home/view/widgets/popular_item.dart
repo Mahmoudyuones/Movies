@@ -19,12 +19,16 @@ class PopularItem extends StatelessWidget {
     TextStyle? titleSmall = Theme.of(context).textTheme.titleSmall;
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, MovieDetails.routeName,
-            arguments: BoxDetailsWanted(
-                movieId: movie.id,
-                titel: movie.title,
-                imageURL: movie.backdropPath,
-                releasDate: movie.releaseDate));
+        Navigator.pushNamed(
+          context,
+          MovieDetails.routeName,
+          arguments: BoxDetailsWanted(
+            movieId: movie.id,
+            titel: movie.title,
+            imageURL: movie.backdropPath,
+            releasDate: movie.releaseDate,
+          ),
+        );
       },
       child: Stack(
         clipBehavior: Clip.none,

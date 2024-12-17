@@ -42,12 +42,15 @@ class _AddState extends State<Add> {
     if (favoritesBox.containsKey(widget.movieId)) {
       favoritesBox.delete(widget.movieId);
     } else {
-      favoritesBox.put(widget.movieId, {
-        'id': widget.movieId,
-        'title': widget.title,
-        'releaseDate': widget.releaseDate,
-        'imageUrl': widget.imageUrl,
-      }); // Save movie details
+      favoritesBox.put(
+        widget.movieId,
+        {
+          'id': widget.movieId,
+          'title': widget.title,
+          'releaseDate': widget.releaseDate,
+          'imageUrl': widget.imageUrl,
+        },
+      );
     }
 
     setState(() {
