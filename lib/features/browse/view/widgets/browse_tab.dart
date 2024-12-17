@@ -69,7 +69,7 @@ class _BrowseTabState extends State<BrowseTab> {
                         child: BorwseCategoryItem(
                             categoryName:
                                 categoriesList[index].name ?? "Other ",
-                            imageName: 'category_item'),
+                            imageName: categoriesList[index].name! ),
                       ),
                       itemCount: categoriesList.length,
                     ),
