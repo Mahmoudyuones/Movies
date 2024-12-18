@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:movies/features/home/data/models/top_rated_models/top_rated_results.dart';
+import 'package:movies/features/watch_list/data/models/watch_list_model.dart';
 import 'package:movies/shared/app_theme/app_colors.dart';
-import 'package:movies/shared/box_details_wanted.dart';
 import 'package:movies/shared/screens/movie_details.dart';
 import 'package:movies/shared/widgets/add.dart';
 import 'package:movies/shared/widgets/loading_indicator.dart';
@@ -23,7 +23,7 @@ class CategoryItemDetailed extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.pushNamed(context, MovieDetails.routeName,
-            arguments: BoxDetailsWanted(movieId: topRated.id!, titel: topRated.title!, imageURL: topRated.backdropPath!, releasDate: topRated.releaseDate!));
+            arguments: WatchListModel(id: topRated.id!, title: topRated.title!, imageUrl: topRated.backdropPath!, releaseDate: topRated.releaseDate!));
       },
       child: Stack(
         clipBehavior: Clip.none,

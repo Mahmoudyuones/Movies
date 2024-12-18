@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:movies/features/similar/data/models/results.dart';
+import 'package:movies/features/watch_list/data/models/watch_list_model.dart';
 import 'package:movies/shared/app_theme/app_colors.dart';
-import 'package:movies/shared/box_details_wanted.dart';
 import 'package:movies/shared/screens/movie_details.dart';
 import 'package:movies/shared/widgets/add.dart';
 import 'package:movies/shared/widgets/loading_indicator.dart';
@@ -25,11 +25,11 @@ class MovieTab extends StatelessWidget {
         Navigator.pushNamed(
           context,
           MovieDetails.routeName,
-          arguments: BoxDetailsWanted(
-              movieId: similarResults.id!,
-              titel: similarResults.title!,
-              imageURL: similarResults.backdropPath!,
-              releasDate: similarResults.releaseDate!),
+          arguments: WatchListModel(
+              id: similarResults.id!,
+              title: similarResults.title!,
+              imageUrl: similarResults.backdropPath!,
+              releaseDate: similarResults.releaseDate!),
         );
       },
       child: Stack(
@@ -49,8 +49,8 @@ class MovieTab extends StatelessWidget {
                     fit: BoxFit.cover,
                     placeholder: (context, url) => const LoadingIndicator(),
                     errorWidget: (context, url, error) => SizedBox(
-                      height: height * 0.21,
-                      width: width * 0.3,
+                          height: height * 0.21,
+                          width: width * 0.3,
                           child: Image.network(
                             'https://th.bing.com/th/id/OIP.nKHjaZVhPgLKjjntUMpmXwHaHa?rs=1&pid=ImgDetMain',
                             fit: BoxFit.fill,

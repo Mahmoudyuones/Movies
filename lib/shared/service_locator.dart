@@ -16,6 +16,7 @@ import 'package:movies/features/search/data/data_source/search_data_source.dart'
 import 'package:movies/features/similar/data/data_source/similar_api_data_source.dart';
 import 'package:movies/features/similar/data/data_source/similar_data_source.dart';
 import 'package:movies/features/watch_list/data/data_source/watch_list_local_data_source.dart';
+import 'package:movies/features/watch_list/data/data_source/watchl_list_data_source.dart';
 
 class ServiceLocator {
   static PopularDataSource popularDataSource = PopularApiDataSource();
@@ -28,7 +29,8 @@ class ServiceLocator {
   static MovieDetailsDataSource movieDetailsDataSource =
       MovieDetailsAPIDataSource();
   static SimilarDataSource similarDataSource = SimilarApiDataSource();
-  static WatchListLocalDataSource watchListLocalDataSource =
-      WatchListLocalDataSource(favoritBox: Hive.box('favorites'));
-
+  // static WatchListLocalDataSource watchListLocalDataSource =
+  //     WatchListLocalDataSource();
+  static WatchListDataSource watchListDataSource =
+      WatchListLocalDataSource(Hive.box('favorites'));
 }

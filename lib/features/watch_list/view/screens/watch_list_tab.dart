@@ -41,10 +41,8 @@ class _WatchListTabState extends State<WatchListTab> {
           if (state is WatchListStateLoading) {
             return const LoadingIndicator();
           } else if (state is WatchListErrorState) {
-            print(state.error);
             return ErrorIndicator(errMessage: state.error);
           } else if (state is WatchListSuccessState) {
-            // Ensure the favoritesBox is accessed after it's available
             final watchList = state.watchList;
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,15 +56,14 @@ class _WatchListTabState extends State<WatchListTab> {
                 ),
                 Expanded(
                   child: ListView.separated(
-                    separatorBuilder: (context, index) => Divider(thickness: 3,),
+                    separatorBuilder: (context, index) => const Divider(
+                      thickness: 3,
+                    ),
                     itemBuilder: (context, index) {
                       final watchlistmodel = watchList[index];
 
                       return WatchListItem(
-                        imageUrl: watchlistmodel.imageUrl,
-                        releaseDate: watchlistmodel.releaseDate,
-                        title: watchlistmodel.title,
-                        id: watchlistmodel.id,
+                        movie: watchlistmodel,
                       );
                     },
                     itemCount: watchList.length,

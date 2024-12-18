@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movies/features/home/data/models/upcoming_models/results.dart';
-import 'package:movies/shared/box_details_wanted.dart';
+import 'package:movies/features/watch_list/data/models/watch_list_model.dart';
 import 'package:movies/shared/screens/movie_details.dart';
 import 'package:movies/shared/widgets/add.dart';
 import 'package:movies/shared/widgets/loading_indicator.dart';
@@ -22,11 +22,12 @@ class CategoryItem extends StatelessWidget {
             Navigator.pushNamed(
               context,
               MovieDetails.routeName,
-              arguments: BoxDetailsWanted(
-                  movieId: results.id,
-                  titel: results.title,
-                  imageURL: results.backdropPath,
-                  releasDate: results.releaseDate),
+              arguments: WatchListModel(
+            id: results.id,
+            title: results.title,
+            imageUrl: results.backdropPath,
+            releaseDate: results.releaseDate,
+          ),
             );
           },
           child: Container(

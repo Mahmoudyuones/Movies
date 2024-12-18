@@ -9,8 +9,8 @@ import 'package:movies/features/movie_details/view_model/movie_details_view_mode
 import 'package:movies/features/similar/view/widgets/movie_tab.dart';
 import 'package:movies/features/similar/view_model/similar_states.dart';
 import 'package:movies/features/similar/view_model/similar_view_model.dart';
+import 'package:movies/features/watch_list/data/models/watch_list_model.dart';
 import 'package:movies/shared/app_theme/app_colors.dart';
-import 'package:movies/shared/box_details_wanted.dart';
 import 'package:movies/shared/widgets/add.dart';
 import 'package:movies/shared/widgets/error_indicator.dart';
 import 'package:movies/shared/widgets/loading_indicator.dart';
@@ -28,11 +28,11 @@ class _MovieDetailsState extends State<MovieDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final BoxDetailsWanted movie =
-        ModalRoute.of(context)!.settings.arguments as BoxDetailsWanted;
+    final WatchListModel movie =
+        ModalRoute.of(context)!.settings.arguments as WatchListModel;
 
     return BlocProvider(
-      create: (_) => MovieDetailsViewModel()..getMovies(movie.movieId),
+      create: (_) => MovieDetailsViewModel()..getMovies(movie.id),
       child: BlocBuilder<MovieDetailsViewModel, MovieDetailsStates>(
         builder: (context, state) {
           if (state is MovieDetailsLoadingState) {
@@ -58,7 +58,7 @@ class _MovieDetailsState extends State<MovieDetails> {
   }
 
   Widget _buildDetailsScreen(BuildContext context, MovieDetailsResponse movie,
-      BoxDetailsWanted boxDetailsWanted) {
+      WatchListModel watchListModel) {
     double height = MediaQuery.sizeOf(context).height;
     double width = MediaQuery.sizeOf(context).width;
     TextStyle? titleLarge = Theme.of(context).textTheme.titleLarge;
@@ -155,10 +155,10 @@ class _MovieDetailsState extends State<MovieDetails> {
                       ),
                     ),
                     Add(
-                      imageUrl: boxDetailsWanted.imageURL,
-                      movieId: boxDetailsWanted.movieId,
-                      releaseDate: boxDetailsWanted.releasDate,
-                      title: boxDetailsWanted.titel,
+                      imageUrl: watchListModel.imageUrl,
+                      movieId: watchListModel.id,
+                      releaseDate: watchListModel.releaseDate,
+                      title: watchListModel.title,
                     ),
                   ],
                 ),
@@ -202,7 +202,7 @@ class _MovieDetailsState extends State<MovieDetails> {
               ],
             ),
             Container(
-              height: height * 0.44,
+              height: height * 0.4,
               width: double.infinity,
               color: AppColors.darkGrey,
               child: Column(
@@ -221,7 +221,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                     create: (context) {
                       final similarViewModel = SimilarViewModel();
                       similarViewModel.getMovies(
-                        boxDetailsWanted.movieId,
+                        watchListModel.id,
                       );
                       return similarViewModel;
                     },
@@ -234,7 +234,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                         } else if (state is SimilarSuccessState) {
                           final similarList = state.similarResults;
                           return SizedBox(
-                            height: height * 0.4,
+                            height: height * 0.35,
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               itemCount: similarList.length,
