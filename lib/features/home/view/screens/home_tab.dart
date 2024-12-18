@@ -25,9 +25,10 @@ class _HomeTabState extends State<HomeTab> {
   final popularViewModel = PopularViewModel();
   final upcomingViewModel = UpcomingViewModel();
   final topRatedViewModel = TopRatedViewModel();
+
   late Timer _timer;
   int _currentPopularIndex = 0;
-  Map<int, bool> favoriteStates = {};
+  bool _allApisSuccessful = false; 
 
   @override
   void initState() {
@@ -55,145 +56,149 @@ class _HomeTabState extends State<HomeTab> {
     });
   }
 
+  void _checkApisSuccess() {
+    final popularSuccess = popularViewModel.state is PopularSuccessState;
+    final upcomingSuccess = upcomingViewModel.state is UpcomingSuccessState;
+    final topRatedSuccess = topRatedViewModel.state is TopRatedSuccessState;
+
+    if (popularSuccess && upcomingSuccess && topRatedSuccess) {
+      if (!_allApisSuccessful) {
+        setState(() {
+          _allApisSuccessful = true;
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.sizeOf(context).height;
     TextStyle? titleLarge = Theme.of(context).textTheme.titleLarge;
 
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Column(
-        children: [
-          BlocProvider(
-            create: (context) => popularViewModel,
-            child: BlocBuilder<PopularViewModel, PopularStates>(
-              builder: (_, state) {
-                if (state is PopularLoadingState) {
-                  return const LoadingIndicator();
-                } else if (state is PopularErrorState) {
-                  return ErrorIndicator(errMessage: state.errMessage);
-                } else if (state is PopularSuccessState) {
-                  final popularList = state.popularList;
-                  _currentPopularIndex %= popularList.length;
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => popularViewModel),
+        BlocProvider(create: (_) => upcomingViewModel),
+        BlocProvider(create: (_) => topRatedViewModel),
+      ],
+      child: BlocListener<PopularViewModel, PopularStates>(
+        listener: (_, state) => _checkApisSuccess(),
+        child: BlocListener<UpcomingViewModel, UpcomingStates>(
+          listener: (_, state) => _checkApisSuccess(),
+          child: BlocListener<TopRatedViewModel, TopRatedStates>(
+            listener: (_, state) => _checkApisSuccess(),
+            child: _allApisSuccessful
+                ? SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Column(
+                      children: [
+                        BlocBuilder<PopularViewModel, PopularStates>(
+                          builder: (_, state) {
+                            if (state is PopularSuccessState) {
+                              final popularList = state.popularList;
+                              _currentPopularIndex %= popularList.length;
 
-                  return Column(
-                    children: [
-                      Stack(
-                        children: [
-                          PopularItem(
-                            popularList[_currentPopularIndex],
+                              return PopularItem(
+                                  popularList[_currentPopularIndex]);
+                            } else if (state is PopularErrorState) {
+                              return ErrorIndicator(
+                                  errMessage: state.errMessage);
+                            } else {
+                              return const SizedBox();
+                            }
+                          },
+                        ),
+                        SizedBox(height: height * 0.1),
+                        Container(
+                          width: double.infinity,
+                          decoration: const BoxDecoration(
+                            color: AppColors.darkGrey,
                           ),
-                        ],
-                      ),
-                    ],
-                  );
-                } else {
-                  return const SizedBox();
-                }
-              },
-            ),
-          ),
-          SizedBox(height: height * 0.1),
-          Container(
-            width: double.infinity,
-            decoration: const BoxDecoration(
-              color: AppColors.darkGrey,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
-                  child: Text(
-                    "New Releases",
-                    style: titleLarge?.copyWith(
-                      fontSize: 15,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 16, horizontal: 8),
+                                child: Text(
+                                  "New Releases",
+                                  style: titleLarge?.copyWith(fontSize: 15),
+                                ),
+                              ),
+                              BlocBuilder<UpcomingViewModel, UpcomingStates>(
+                                builder: (_, state) {
+                                  if (state is UpcomingSuccessState) {
+                                    final upcomingList = state.upcomingList;
+
+                                    return SizedBox(
+                                      height: height * 0.3,
+                                      child: ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: upcomingList.length,
+                                        itemBuilder: (context, index) =>
+                                            CategoryItem(upcomingList[index]),
+                                      ),
+                                    );
+                                  } else if (state is UpcomingErrorState) {
+                                    return ErrorIndicator(
+                                        errMessage: state.errMessage);
+                                  } else {
+                                    return const SizedBox();
+                                  }
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: height * 0.05),
+                        Container(
+                          width: double.infinity,
+                          decoration: const BoxDecoration(
+                            color: AppColors.darkGrey,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 16, horizontal: 8),
+                                child: Text(
+                                  "Recommended",
+                                  style: titleLarge?.copyWith(fontSize: 15),
+                                ),
+                              ),
+                              BlocBuilder<TopRatedViewModel, TopRatedStates>(
+                                builder: (_, state) {
+                                  if (state is TopRatedSuccessState) {
+                                    final topRatedList = state.topRatedList;
+
+                                    return SizedBox(
+                                      height: height * 0.3,
+                                      child: ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: topRatedList.length,
+                                        itemBuilder: (context, index) =>
+                                            CategoryItemDetailed(
+                                                topRatedList[index]),
+                                      ),
+                                    );
+                                  } else if (state is TopRatedErrorState) {
+                                    return ErrorIndicator(
+                                        errMessage: state.errMessage);
+                                  } else {
+                                    return const SizedBox();
+                                  }
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ),
-                BlocProvider(
-                  create: (context) => upcomingViewModel,
-                  child: BlocBuilder<UpcomingViewModel, UpcomingStates>(
-                    builder: (_, state) {
-                      if (state is UpcomingLoadingState) {
-                        return const LoadingIndicator();
-                      } else if (state is UpcomingErrorState) {
-                        return ErrorIndicator(errMessage: state.errMessage);
-                      } else if (state is UpcomingSuccessState) {
-                        final upcomingList = state.upcomingList;
-
-                        return SizedBox(
-                          height: height * 0.3,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: upcomingList.length,
-                            itemBuilder: (context, index) =>
-                                CategoryItem(upcomingList[index]),
-                          ),
-                        );
-                      } else {
-                        return const SizedBox(
-                          height: 180,
-                        );
-                      }
-                    },
-                  ),
-                ),
-              ],
-            ),
+                  )
+                :const LoadingIndicator(),
           ),
-          SizedBox(height: height * 0.05),
-          Container(
-            width: double.infinity,
-            decoration: const BoxDecoration(
-              color: AppColors.darkGrey,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
-                  child: Text(
-                    "Recommended",
-                    style: titleLarge?.copyWith(
-                      fontSize: 15,
-                    ),
-                  ),
-                ),
-                BlocProvider(
-                  create: (context) => topRatedViewModel,
-                  child: BlocBuilder<TopRatedViewModel, TopRatedStates>(
-                    builder: (_, state) {
-                      if (state is TopRatedLoadingState) {
-                        return const LoadingIndicator();
-                      } else if (state is TopRatedErrorState) {
-                        return ErrorIndicator(errMessage: state.errMessage);
-                      } else if (state is TopRatedSuccessState) {
-                        final topRatedList = state.topRatedList;
-
-                        return SizedBox(
-                          height: height * 0.3,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: topRatedList.length,
-                            itemBuilder: (context, index) =>
-                                CategoryItemDetailed(topRatedList[index]),
-                          ),
-                        );
-                      } else {
-                        return const SizedBox(
-                          height: 180,
-                        );
-                      }
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
