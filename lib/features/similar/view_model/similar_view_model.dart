@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies/features/similar/data/models/results.dart';
 import 'package:movies/features/similar/data/repository/similar_repository.dart';
 import 'package:movies/features/similar/view_model/similar_states.dart';
+import 'package:movies/shared/models/movie_model.dart';
 import 'package:movies/shared/service_locator.dart';
 
 class SimilarViewModel extends Cubit<SimilarStates> {
@@ -13,7 +13,7 @@ class SimilarViewModel extends Cubit<SimilarStates> {
   Future<void> getMovies(int movieId) async {
     emit(SimilarLoadingState());
     try {
-      final List<SimilarResults> similarList =
+      final List<Movie> similarList =
           await repository.getMovies(movieId);
       emit(
         SimilarSuccessState(

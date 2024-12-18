@@ -1,4 +1,4 @@
-import 'package:movies/features/home/data/models/top_rated_models/top_rated_results.dart';
+import 'package:movies/shared/models/movie_model.dart';
 
 abstract class TopRatedStates {}
 
@@ -13,7 +13,7 @@ class TopRatedErrorState extends TopRatedStates {
 }
 
 class TopRatedSuccessState extends TopRatedStates {
-  final List<TopRatedResults> topRatedList;
+  final List<Movie> topRatedList;
 
   TopRatedSuccessState(this.topRatedList);
 }

@@ -1,5 +1,5 @@
 import 'package:movies/features/browse/data/data_source/Category_details/category_details_data_source.dart';
-import 'package:movies/features/home/data/models/popular_models/movie.dart';
+import 'package:movies/shared/models/movie_model.dart';
 
 class CategoryDetailsReposatory {
   final CategoryDetailsDataSource categoryDetailsDataSource;

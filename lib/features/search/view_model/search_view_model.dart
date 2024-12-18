@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies/features/search/data/models/results.dart';
 import 'package:movies/features/search/data/repository/search_repository.dart';
 import 'package:movies/features/search/view_model/search_states.dart';
+import 'package:movies/shared/models/movie_model.dart';
 import 'package:movies/shared/service_locator.dart';
 
 class SearchViewModel extends Cubit<SearchStates> {
@@ -16,7 +16,7 @@ class SearchViewModel extends Cubit<SearchStates> {
     }
     emit(SearchLoadingState());
     try {
-      final List<Results> searchResults = await _repository.getMovies(query);
+      final List<Movie> searchResults = await _repository.getMovies(query);
       emit(SearchSuccessState(searchResults));
     } catch (errorMessage) {
       emit(SearchErrorState(errorMessage.toString()));

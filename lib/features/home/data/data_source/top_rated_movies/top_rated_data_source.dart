@@ -1,5 +1,5 @@
-import 'package:movies/features/home/data/models/top_rated_models/top_rated_results.dart';
+import 'package:movies/shared/models/movie_model.dart';
 
 abstract class TopRatedDataSource {
-  Future<List<TopRatedResults>> getMovies();
+  Future<List<Movie>> getMovies();
 }

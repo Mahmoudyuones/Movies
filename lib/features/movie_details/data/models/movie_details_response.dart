@@ -1,7 +1,4 @@
 import 'genre.dart';
-import 'production_company.dart';
-import 'production_country.dart';
-import 'spoken_language.dart';
 
 class MovieDetailsResponse {
   final bool? adult;
@@ -18,12 +15,10 @@ class MovieDetailsResponse {
   final String? overview;
   final double? popularity;
   final String? posterPath;
-  final List<ProductionCompany>? productionCompanies;
-  final List<ProductionCountry>? productionCountries;
+
   final String? releaseDate;
   final int? revenue;
   final int? runtime;
-  final List<SpokenLanguage>? spokenLanguages;
   final String? status;
   final String? tagline;
   final String? title;
@@ -46,12 +41,9 @@ class MovieDetailsResponse {
     this.overview,
     this.popularity,
     this.posterPath,
-    this.productionCompanies,
-    this.productionCountries,
     this.releaseDate,
     this.revenue,
     this.runtime,
-    this.spokenLanguages,
     this.status,
     this.tagline,
     this.title,
@@ -80,18 +72,9 @@ class MovieDetailsResponse {
       overview: json['overview'] as String?,
       popularity: (json['popularity'] as num?)?.toDouble(),
       posterPath: json['poster_path'] as String?,
-      productionCompanies: (json['production_companies'] as List<dynamic>?)
-          ?.map((e) => ProductionCompany.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      productionCountries: (json['production_countries'] as List<dynamic>?)
-          ?.map((e) => ProductionCountry.fromJson(e as Map<String, dynamic>))
-          .toList(),
       releaseDate: json['release_date'] as String?,
       revenue: json['revenue'] as int?,
       runtime: json['runtime'] as int?,
-      spokenLanguages: (json['spoken_languages'] as List<dynamic>?)
-          ?.map((e) => SpokenLanguage.fromJson(e as Map<String, dynamic>))
-          .toList(),
       status: json['status'] as String?,
       tagline: json['tagline'] as String?,
       title: json['title'] as String?,

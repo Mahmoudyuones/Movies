@@ -1,5 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies/features/home/data/models/upcoming_models/results.dart';
+import 'package:movies/shared/models/movie_model.dart';
 import 'package:movies/features/home/data/repositories/upcoming_repository.dart';
 import 'package:movies/features/home/view_model/upcoming_movies_view_model/upcoming_states.dart';
 import 'package:movies/shared/service_locator.dart';
@@ -13,13 +15,20 @@ class UpcomingViewModel extends Cubit<UpcomingStates> {
   Future<void> getMovies() async {
     emit(UpcomingLoadingState());
     try {
-      final List<Results> upcomingList = await repository.getMovies();
+      final List<Movie> upcomingList = await repository.getMovies();
       emit(
         UpcomingSuccessState(
           upcomingList,
         ),
       );
-    } catch (e) {
+    } on SocketException {
+      emit(
+        UpcomingErrorState(
+          'No Internet Connection. Please try again.',
+        ),
+      );
+    } 
+    catch (e) {
       emit(
         UpcomingErrorState(
           e.toString(),

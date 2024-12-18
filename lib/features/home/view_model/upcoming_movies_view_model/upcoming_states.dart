@@ -1,4 +1,4 @@
-import 'package:movies/features/home/data/models/upcoming_models/results.dart';
+import 'package:movies/shared/models/movie_model.dart';
 
 abstract class UpcomingStates {}
 
@@ -13,7 +13,7 @@ class UpcomingErrorState extends UpcomingStates {
 }
 
 class UpcomingSuccessState extends UpcomingStates {
-  final List<Results> upcomingList;
+  final List<Movie> upcomingList;
 
   UpcomingSuccessState(this.upcomingList);
 }

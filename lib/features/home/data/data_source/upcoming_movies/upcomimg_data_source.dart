@@ -1,5 +1,5 @@
-import 'package:movies/features/home/data/models/upcoming_models/results.dart';
+import 'package:movies/shared/models/movie_model.dart';
 
 abstract class UpcomimgDataSource {
-  Future<List<Results>> getMovies();
+  Future<List<Movie>> getMovies();
 }

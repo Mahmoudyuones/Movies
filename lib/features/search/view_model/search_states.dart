@@ -1,4 +1,5 @@
-import 'package:movies/features/search/data/models/results.dart';
+
+import 'package:movies/shared/models/movie_model.dart';
 
 abstract class SearchStates {}
 
@@ -13,7 +14,7 @@ class SearchErrorState extends SearchStates {
 }
 
 class SearchSuccessState extends SearchStates {
-  final List<Results> searchResults;
+  final List<Movie> searchResults;
 
   SearchSuccessState(this.searchResults);
 }

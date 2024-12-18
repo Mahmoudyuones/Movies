@@ -1,8 +1,8 @@
-import 'package:movies/features/home/data/models/top_rated_models/top_rated_results.dart';
+import "package:movies/shared/models/movie_model.dart";
 
 class TopRatedResponse {
   int? page;
-  List<TopRatedResults>? results;
+  List<Movie>? results;
   int? totalPages;
   int? totalResults;
 
@@ -16,9 +16,9 @@ class TopRatedResponse {
   TopRatedResponse.fromJson(Map<String, dynamic> json) {
     page = json['page'];
     if (json['results'] != null) {
-      results = <TopRatedResults>[];
+      results = <Movie>[];
       json['results'].forEach((v) {
-        results!.add(TopRatedResults.fromJson(v));
+        results!.add(Movie.fromJson(v));
       });
     }
     totalPages = json['total_pages'];

@@ -1,6 +1,5 @@
-
-import 'package:movies/features/similar/data/models/results.dart';
+import 'package:movies/shared/models/movie_model.dart';
 
 abstract class SimilarDataSource {
-  Future<List<SimilarResults>> getMovies(int movieId);
+  Future<List<Movie>> getMovies(int movieId);
 }

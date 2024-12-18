@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:movies/features/home/data/models/popular_models/movie.dart';
 import 'package:movies/features/watch_list/data/models/watch_list_model.dart';
 import 'package:movies/shared/app_theme/app_colors.dart';
+import 'package:movies/shared/models/movie_model.dart';
 import 'package:movies/shared/screens/movie_details.dart';
 import 'package:movies/shared/widgets/add.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -14,20 +14,21 @@ class PopularItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.sizeOf(context).height;
-    double width = MediaQuery.sizeOf(context).width;
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     TextStyle? titleLarge = Theme.of(context).textTheme.titleLarge;
     TextStyle? titleSmall = Theme.of(context).textTheme.titleSmall;
+
     return InkWell(
       onTap: () {
         Navigator.pushNamed(
           context,
           MovieDetails.routeName,
           arguments: WatchListModel(
-            id: movie.id,
-            title: movie.title,
-            imageUrl: movie.backdropPath,
-            releaseDate: movie.releaseDate,
+            id: movie.id ?? 0,
+            title: movie.title ?? "Unknown Title",
+            imageUrl: movie.backdropPath ?? '',
+            releaseDate: movie.releaseDate ?? "Unknown Date",
           ),
         );
       },
@@ -39,10 +40,10 @@ class PopularItem extends StatelessWidget {
             height: height * 0.25,
             width: double.infinity,
             child: CachedNetworkImage(
-              imageUrl: movie.backdropPath.isNotEmpty
+              imageUrl: movie.backdropPath != null
                   ? 'https://image.tmdb.org/t/p/w500/${movie.backdropPath}'
                   : '',
-              height: MediaQuery.sizeOf(context).height * 0.25,
+              height: height * 0.25,
               width: double.infinity,
               fit: BoxFit.fill,
               placeholder: (context, url) => const LoadingIndicator(),
@@ -64,8 +65,9 @@ class PopularItem extends StatelessWidget {
               child: Stack(
                 children: [
                   CachedNetworkImage(
-                    imageUrl:
-                        'https://image.tmdb.org/t/p/w500/${movie.posterPath}',
+                    imageUrl: movie.posterPath != null
+                        ? 'https://image.tmdb.org/t/p/w500/${movie.posterPath}'
+                        : '',
                     placeholder: (context, url) => const LoadingIndicator(),
                     errorWidget: (context, url, error) =>
                         const Icon(Icons.image_not_supported),
@@ -74,10 +76,10 @@ class PopularItem extends StatelessWidget {
                     end: width * 0.18,
                     bottom: height * 0.24,
                     child: Add(
-                      imageUrl: movie.backdropPath,
-                      movieId: movie.id,
-                      title: movie.title,
-                      releaseDate: movie.releaseDate,
+                      imageUrl: movie.backdropPath ?? '',
+                      movieId: movie.id ?? 0,
+                      title: movie.title ?? "Unknown Title",
+                      releaseDate: movie.releaseDate ?? "Unknown Date",
                     ),
                   ),
                 ],
@@ -88,7 +90,7 @@ class PopularItem extends StatelessWidget {
             top: height * 0.255,
             start: width * 0.4,
             child: Text(
-              movie.title,
+              movie.title ?? "Unknown Title",
               style: titleLarge,
             ),
           ),
@@ -98,19 +100,18 @@ class PopularItem extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  DateFormat('yyyy').format(DateTime.parse(movie.releaseDate)),
+                  movie.releaseDate != null
+                      ? DateFormat('yyyy')
+                          .format(DateTime.parse(movie.releaseDate!))
+                      : "No date",
                   style: titleSmall?.copyWith(fontSize: 10),
                 ),
-                const SizedBox(
-                  width: 5,
-                ),
+                const SizedBox(width: 5),
                 Text(
-                  movie.adult ? 'Pg-13' : 'R',
+                  movie.adult == true ? 'R' : 'PG-13',
                   style: titleSmall?.copyWith(fontSize: 10),
                 ),
-                const SizedBox(
-                  width: 5,
-                ),
+                const SizedBox(width: 5),
               ],
             ),
           ),
