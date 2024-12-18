@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies/features/watch_list/view_model/watch_list_state.dart';
+import 'package:movies/features/watch_list/view_model/watch_list_view_model.dart';
 import 'package:movies/shared/app_theme/app_colors.dart';
 
-class Add extends StatefulWidget {
+import '../../features/watch_list/data/models/watch_list_model.dart';
+
+class Add extends StatelessWidget {
   final int movieId;
   final String title;
   final String releaseDate;
@@ -17,67 +21,45 @@ class Add extends StatefulWidget {
   });
 
   @override
-  State<Add> createState() => _AddState();
-}
-
-class _AddState extends State<Add> {
-  late Box favoritesBox;
-  bool isPressed = false;
-
-  @override
-  void initState() {
-    super.initState();
-    openBox();
-  }
-
-  Future<void> openBox() async {
-    favoritesBox = await Hive.openBox('favorites');
-
-    setState(() {
-      isPressed = favoritesBox.containsKey(widget.movieId);
-    });
-  }
-
-  void toggleFavorite() {
-    if (favoritesBox.containsKey(widget.movieId)) {
-      favoritesBox.delete(widget.movieId);
-    } else {
-      favoritesBox.put(
-        widget.movieId,
-        {
-          'id': widget.movieId,
-          'title': widget.title,
-          'releaseDate': widget.releaseDate,
-          'imageUrl': widget.imageUrl,
-        },
-      );
-    }
-
-    setState(() {
-      isPressed = !isPressed;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: toggleFavorite,
-      icon: Stack(
-        alignment: Alignment.center,
-        children: [
-          Icon(
-            Icons.bookmark,
-            color: isPressed
-                ? AppColors.yellow
-                : const Color.fromARGB(214, 81, 79, 79),
-            size: 50,
+    return BlocBuilder<WatchListViewModel, WatchListState>(
+      builder: (context, state) {
+        final watchListViewModel = context.read<WatchListViewModel>();
+        final isInWatchList = watchListViewModel.isInWatchList(movieId);
+
+        return IconButton(
+          onPressed: () {
+            if (isInWatchList) {
+              watchListViewModel.removeMovie(movieId);
+            } else {
+              watchListViewModel.addMovie(
+                WatchListModel(
+                  id: movieId,
+                  title: title,
+                  releaseDate: releaseDate,
+                  imageUrl: imageUrl,
+                ),
+              );
+            }
+          },
+          icon: Stack(
+            alignment: Alignment.center,
+            children: [
+              Icon(
+                Icons.bookmark,
+                color: isInWatchList
+                    ? AppColors.yellow
+                    : const Color.fromARGB(214, 81, 79, 79),
+                size: 50,
+              ),
+              Icon(
+                isInWatchList ? Icons.check : Icons.add,
+                color: AppColors.white,
+              ),
+            ],
           ),
-          Icon(
-            isPressed ? Icons.check : Icons.add,
-            color: AppColors.white,
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

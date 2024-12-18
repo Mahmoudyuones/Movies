@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:movies/features/home/data/models/popular_models/movie.dart';
+import 'package:movies/features/watch_list/data/models/watch_list_model.dart';
 import 'package:movies/shared/app_theme/app_colors.dart';
-import 'package:movies/shared/box_details_wanted.dart';
 import 'package:movies/shared/screens/movie_details.dart';
 import 'package:movies/shared/widgets/add.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -23,11 +23,11 @@ class PopularItem extends StatelessWidget {
         Navigator.pushNamed(
           context,
           MovieDetails.routeName,
-          arguments: BoxDetailsWanted(
-            movieId: movie.id,
-            titel: movie.title,
-            imageURL: movie.backdropPath,
-            releasDate: movie.releaseDate,
+          arguments: WatchListModel(
+            id: movie.id,
+            title: movie.title,
+            imageUrl: movie.backdropPath,
+            releaseDate: movie.releaseDate,
           ),
         );
       },

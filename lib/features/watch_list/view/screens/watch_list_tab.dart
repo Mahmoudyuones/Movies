@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:movies/features/watch_list/data/models/watch_list_model.dart';
 import 'package:movies/features/watch_list/view_model/watch_list_state.dart';
 import 'package:movies/features/watch_list/view_model/watch_list_view_model.dart';
 
 import 'package:movies/features/watch_list/view/widgets/watch_list_item.dart';
+import 'package:movies/shared/screens/movie_details.dart';
 import 'package:movies/shared/widgets/error_indicator.dart';
 import 'package:movies/shared/widgets/loading_indicator.dart';
 
@@ -41,10 +43,8 @@ class _WatchListTabState extends State<WatchListTab> {
           if (state is WatchListStateLoading) {
             return const LoadingIndicator();
           } else if (state is WatchListErrorState) {
-            print(state.error);
             return ErrorIndicator(errMessage: state.error);
           } else if (state is WatchListSuccessState) {
-            // Ensure the favoritesBox is accessed after it's available
             final watchList = state.watchList;
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,15 +58,28 @@ class _WatchListTabState extends State<WatchListTab> {
                 ),
                 Expanded(
                   child: ListView.separated(
-                    separatorBuilder: (context, index) => Divider(thickness: 3,),
+                    separatorBuilder: (context, index) => const Divider(
+                      thickness: 3,
+                    ),
                     itemBuilder: (context, index) {
                       final watchlistmodel = watchList[index];
 
-                      return WatchListItem(
-                        imageUrl: watchlistmodel.imageUrl,
-                        releaseDate: watchlistmodel.releaseDate,
-                        title: watchlistmodel.title,
-                        id: watchlistmodel.id,
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            MovieDetails.routeName,
+                            arguments: WatchListModel(
+                              id: watchlistmodel.id,
+                              title: watchlistmodel.title,
+                              imageUrl: watchlistmodel.imageUrl,
+                              releaseDate: watchlistmodel.releaseDate,
+                            ),
+                          );
+                        },
+                        child: WatchListItem(
+                          movie: watchlistmodel,
+                        ),
                       );
                     },
                     itemCount: watchList.length,

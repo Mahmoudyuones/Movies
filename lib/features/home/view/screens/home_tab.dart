@@ -29,7 +29,6 @@ class _HomeTabState extends State<HomeTab> {
   int _currentPopularIndex = 0;
   Map<int, bool> favoriteStates = {};
 
-
   @override
   void initState() {
     super.initState();
@@ -46,7 +45,7 @@ class _HomeTabState extends State<HomeTab> {
   }
 
   void _startPopularItemTimer() {
-    _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
       setState(() {
         _currentPopularIndex++;
         if (_currentPopularIndex >= 5) {
@@ -55,8 +54,6 @@ class _HomeTabState extends State<HomeTab> {
       });
     });
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -119,8 +116,6 @@ class _HomeTabState extends State<HomeTab> {
                   create: (context) => upcomingViewModel,
                   child: BlocBuilder<UpcomingViewModel, UpcomingStates>(
                     builder: (_, state) {
-                      debugPrint('Upcoming state: $state');
-
                       if (state is UpcomingLoadingState) {
                         return const LoadingIndicator();
                       } else if (state is UpcomingErrorState) {
@@ -171,8 +166,6 @@ class _HomeTabState extends State<HomeTab> {
                   create: (context) => topRatedViewModel,
                   child: BlocBuilder<TopRatedViewModel, TopRatedStates>(
                     builder: (_, state) {
-                      debugPrint('Upcoming state: $state');
-
                       if (state is TopRatedLoadingState) {
                         return const LoadingIndicator();
                       } else if (state is TopRatedErrorState) {

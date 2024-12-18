@@ -11,12 +11,12 @@ class WatchListModel {
     required this.imageUrl,
   });
 
-  factory WatchListModel.fromMap(Map<dynamic, dynamic> map) {
+  factory WatchListModel.fromMap(Map<dynamic, dynamic> json) {
     return WatchListModel(
-      id: map['id'],
-      title: map['title'],
-      releaseDate: map['releaseDate'],
-      imageUrl: map['imageUrl'],
+      id: json['id'],
+      title: json['title'],
+      releaseDate: json['releaseDate'],
+      imageUrl: json['imageUrl'],
     );
   }
 
