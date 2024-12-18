@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -14,6 +15,7 @@ import 'package:movies/shared/app_theme/app_colors.dart';
 import 'package:movies/shared/widgets/add.dart';
 import 'package:movies/shared/widgets/error_indicator.dart';
 import 'package:movies/shared/widgets/loading_indicator.dart';
+import 'package:movies/shared/widgets/network_faild.dart';
 
 class MovieDetails extends StatefulWidget {
   static const String routeName = 'Details';
@@ -25,38 +27,71 @@ class MovieDetails extends StatefulWidget {
 
 class _MovieDetailsState extends State<MovieDetails> {
   final MovieDetailsViewModel viewModel = MovieDetailsViewModel();
+  Future<bool> checkConnectivity() async {
+    ConnectivityResult result = await Connectivity().checkConnectivity();
+    return result != ConnectivityResult.none;
+  }
+
+  void onRetryPressed() {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     final WatchListModel movie =
         ModalRoute.of(context)!.settings.arguments as WatchListModel;
 
-    return BlocProvider(
-      create: (_) => MovieDetailsViewModel()..getMovies(movie.id),
-      child: BlocBuilder<MovieDetailsViewModel, MovieDetailsStates>(
-        builder: (context, state) {
-          if (state is MovieDetailsLoadingState) {
-            return const Scaffold(
-              body: Center(child: LoadingIndicator()),
-            );
-          } else if (state is MovieDetailsErrorState) {
-            return Scaffold(
-              appBar: AppBar(title: const Text('Movie Details')),
-              body: Center(child: ErrorIndicator(errMessage: state.errMessage)),
-            );
-          } else if (state is MovieDetailsSuccessState) {
-            return _buildDetailsScreen(
-                context, state.movieDetailsResults, movie);
-          }
-
+    return FutureBuilder(
+      future: checkConnectivity(),
+      builder: (_, snapshot) {
+        if(snapshot.connectionState==ConnectionState.waiting)
+        {
           return const Scaffold(
-            body: Center(child: Text('Something went wrong.')),
+            body: LoadingIndicator(),
           );
-        },
-      ),
+        }
+        else if(snapshot.hasData&&snapshot.data==true)
+        {
+          return BlocProvider(
+            create: (_) => MovieDetailsViewModel()..getMovies(movie.id),
+            child: BlocBuilder<MovieDetailsViewModel, MovieDetailsStates>(
+              builder: (context, state) {
+                if (state is MovieDetailsLoadingState) {
+                  return const Scaffold(
+                    body: Center(child: LoadingIndicator()),
+                  );
+                } else if (state is MovieDetailsErrorState) {
+                  return Scaffold(
+                    appBar: AppBar(title: const Text('Movie Details')),
+                    body: Center(
+                        child: ErrorIndicator(errMessage: state.errMessage)),
+                  );
+                } else if (state is MovieDetailsSuccessState) {
+                  return _buildDetailsScreen(
+                      context, state.movieDetailsResults, movie);
+                }
+
+                {
+                  return const Scaffold(
+                    body: Center(child: Text('Something went wrong.')),
+                  );
+                }
+              },
+            ),
+          );
+        }
+        else {
+           return Scaffold(
+            body: NetWorkFaild(
+              onPressed: onRetryPressed,
+            ),
+          );
+        }
+      },
     );
   }
 
+  
   Widget _buildDetailsScreen(BuildContext context, MovieDetailsResponse movie,
       WatchListModel watchListModel) {
     double height = MediaQuery.sizeOf(context).height;
