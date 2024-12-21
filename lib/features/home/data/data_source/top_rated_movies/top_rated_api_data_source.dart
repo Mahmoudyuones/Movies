@@ -2,13 +2,13 @@ import 'dart:convert';
 
 import 'package:movies/features/home/data/data_source/top_rated_movies/top_rated_data_source.dart';
 import 'package:movies/features/home/data/models/top_rated_models/top_rated_response.dart';
-import 'package:movies/features/home/data/models/top_rated_models/top_rated_results.dart';
 import 'package:movies/shared/api_constans/api_constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:movies/shared/models/movie_model.dart';
 
 class TopRatedApiDataSource extends TopRatedDataSource {
   @override
-  Future<List<TopRatedResults>> getMovies() async {
+  Future<List<Movie>> getMovies() async {
     final uri = Uri.https(
       ApiConstans.baseURL,
       ApiConstans.topRatedEndPoint,

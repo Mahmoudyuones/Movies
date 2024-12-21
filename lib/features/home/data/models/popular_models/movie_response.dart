@@ -1,4 +1,4 @@
-import 'package:movies/features/home/data/models/popular_models/movie.dart';
+import "package:movies/shared/models/movie_model.dart";
 
 class MoviesResponse {
   final int? page;

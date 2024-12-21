@@ -1,9 +1,9 @@
 
-import 'package:movies/features/similar/data/models/results.dart';
+import 'package:movies/shared/models/movie_model.dart';
 
 class SimilarResponse {
   int? page;
-  List<SimilarResults>? results;
+  List<Movie>? results;
   int? totalPages;
   int? totalResults;
 
@@ -13,9 +13,9 @@ class SimilarResponse {
   SimilarResponse.fromJson(Map<String, dynamic> json) {
     page = json['page'];
     if (json['results'] != null) {
-      results = <SimilarResults>[];
+      results = <Movie>[];
       json['results'].forEach((v) {
-        results!.add(SimilarResults.fromJson(v));
+        results!.add(Movie.fromJson(v));
       });
     }
     totalPages = json['total_pages'];

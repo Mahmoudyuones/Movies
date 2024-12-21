@@ -1,5 +1,5 @@
-import 'package:movies/features/search/data/models/results.dart';
+import 'package:movies/shared/models/movie_model.dart';
 
 abstract class SearchDataSource {
-  Future<List<Results>> getMovies(String query);
+  Future<List<Movie>> getMovies(String query);
 }

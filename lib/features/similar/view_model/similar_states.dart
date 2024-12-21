@@ -1,4 +1,4 @@
-import 'package:movies/features/similar/data/models/results.dart';
+import 'package:movies/shared/models/movie_model.dart';
 
 abstract class SimilarStates {}
 
@@ -13,7 +13,7 @@ class SimilarErrorState extends SimilarStates {
 }
 
 class SimilarSuccessState extends SimilarStates {
-  final List<SimilarResults> similarResults;
+  final List<Movie> similarResults;
 
   SimilarSuccessState(this.similarResults);
 }

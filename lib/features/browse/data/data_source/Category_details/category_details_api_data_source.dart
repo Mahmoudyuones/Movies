@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:movies/features/browse/data/data_source/Category_details/category_details_data_source.dart';
 import 'package:movies/features/browse/data/models/category_details/category_details_response.dart';
-import 'package:movies/features/home/data/models/popular_models/movie.dart';
 import 'package:movies/shared/api_constans/api_constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:movies/shared/models/movie_model.dart';
 
 class CategoryDetailsApiDataSource extends CategoryDetailsDataSource {
   @override

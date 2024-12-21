@@ -1,14 +1,14 @@
 import 'dart:convert';
 
 import 'package:movies/features/home/data/data_source/upcoming_movies/upcomimg_data_source.dart';
-import 'package:movies/features/home/data/models/upcoming_models/results.dart';
 import 'package:movies/features/home/data/models/upcoming_models/upcoming_response.dart';
 import 'package:movies/shared/api_constans/api_constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:movies/shared/models/movie_model.dart';
 
 class UpcomingApiDataSource extends UpcomimgDataSource {
   @override
-  Future<List<Results>> getMovies() async {
+  Future<List<Movie>> getMovies() async {
     final uri = Uri.https(
       ApiConstans.baseURL,
       ApiConstans.upcomingEndPoint,

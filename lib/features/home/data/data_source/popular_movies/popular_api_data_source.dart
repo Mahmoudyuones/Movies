@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:movies/features/home/data/data_source/popular_movies/popular_data_source.dart';
-import 'package:movies/features/home/data/models/popular_models/movie.dart';
 import 'package:movies/features/home/data/models/popular_models/movie_response.dart';
 import 'package:movies/shared/api_constans/api_constants.dart';
+import 'package:movies/shared/models/movie_model.dart';
 
 class PopularApiDataSource extends PopularDataSource {
   @override

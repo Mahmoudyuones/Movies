@@ -88,17 +88,25 @@ class _SearchTabState extends State<SearchTab> {
                         horizontal: MediaQuery.sizeOf(context).width * 0.05),
                     child: ListView.separated(
                       itemBuilder: (context, index) => InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(context, MovieDetails.routeName,
-                                arguments: WatchListModel(
-                                  id: state.searchResults[index].id!,
-                                  title: state.searchResults[index].title!,
-                                  imageUrl: state.searchResults[index].backdropPath!,
-                                  releaseDate: state.searchResults[index].releaseDate!),
-                            );
-                          },
-                          child: SearchItem(
-                              searchMovie: state.searchResults[index])),
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            MovieDetails.routeName,
+                            arguments: WatchListModel(
+                              id: state.searchResults[index].id!,
+                              title: state.searchResults[index].title ??
+                                  "Unknown Title",
+                              imageUrl:
+                                  state.searchResults[index].backdropPath ?? "",
+                              releaseDate:
+                                  state.searchResults[index].releaseDate ??
+                                      "Unknown Date",
+                            ),
+                          );
+                        },
+                        child:
+                            SearchItem(searchMovie: state.searchResults[index]),
+                      ),
                       itemCount: state.searchResults.length,
                       separatorBuilder: (context, index) => const Divider(),
                     ),

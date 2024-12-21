@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:movies/features/home/data/models/upcoming_models/results.dart';
 import 'package:movies/features/watch_list/data/models/watch_list_model.dart';
+import 'package:movies/shared/models/movie_model.dart';
 import 'package:movies/shared/screens/movie_details.dart';
 import 'package:movies/shared/widgets/add.dart';
 import 'package:movies/shared/widgets/loading_indicator.dart';
 
 class CategoryItem extends StatelessWidget {
-  final Results results;
+  final Movie results;
   const CategoryItem(this.results, {super.key});
 
   @override
@@ -22,11 +22,11 @@ class CategoryItem extends StatelessWidget {
             Navigator.pushNamed(
               context,
               MovieDetails.routeName,
-              arguments: WatchListModel(
-            id: results.id,
-            title: results.title,
-            imageUrl: results.backdropPath,
-            releaseDate: results.releaseDate,
+              arguments:WatchListModel(
+            id: results.id!,
+            title: results.title ?? "Unknown Title",
+            imageUrl: results.backdropPath ?? "",
+            releaseDate: results.releaseDate ?? "Unknown Date",
           ),
             );
           },
@@ -47,11 +47,11 @@ class CategoryItem extends StatelessWidget {
           top: height * 0.001,
           end: width * 0.2,
           child: Add(
-            imageUrl: results.backdropPath,
-            movieId: results.id,
-            title: results.title,
-            releaseDate: results.releaseDate,
-          ),
+              imageUrl: results.backdropPath ?? "",
+              movieId: results.id ?? 0,
+              title: results.title ?? "Unknown Title",
+              releaseDate: results.releaseDate ?? "Unknown Date",
+            ),
         ),
       ],
     );

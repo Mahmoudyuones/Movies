@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:movies/features/browse/data/reposatory/category_details_reposatory.dart';
 import 'package:movies/features/browse/view_model/category_details_view_model/category_details_state.dart';
-import 'package:movies/features/home/data/models/popular_models/movie.dart';
+import 'package:movies/shared/models/movie_model.dart';
 import 'package:movies/shared/service_locator.dart';
 
 class CategoryDetailsViewModel extends Cubit<CategoryDetailsState> {
