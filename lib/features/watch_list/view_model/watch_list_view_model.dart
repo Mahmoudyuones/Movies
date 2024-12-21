@@ -16,6 +16,9 @@ class WatchListViewModel extends Cubit<WatchListState> {
     try {
       emit(WatchListStateLoading());
       final watchList = _repository.getWatchList();
+      watchList.sort(
+        (a, b) => b.addedDate.compareTo(a.addedDate),
+      );
       emit(WatchListSuccessState(watchList));
     } catch (e) {
       emit(WatchListErrorState(e.toString()));
