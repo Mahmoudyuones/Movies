@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -59,8 +58,11 @@ class _WatchListTabState extends State<WatchListTab> {
                 ),
                 Expanded(
                   child: ListView.separated(
-                    separatorBuilder: (context, index) => const Divider(
-                      thickness: 3,
+                    separatorBuilder: (context, index) => const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 25),
+                      child: Divider(
+                        thickness: 1,
+                      ),
                     ),
                     itemBuilder: (context, index) {
                       final watchlistmodel = watchList[index];
